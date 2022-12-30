@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   
+  resources :reviews
   resources :users
   resources :movies
   # Routing logic: fallback requests for React Router.
