@@ -14,6 +14,7 @@ function NavBar({ setUser }){
     return(
         <div className="header">
             <nav>
+                <Link to ="/allmovies">SEEN IT</Link>
                 <Link to ="/allmovies">ALL MOVIES</Link>
                 <Link to ="/mymovies">MY MOVIES</Link>
                 <Link to ="/new">ADD MOVIE</Link>

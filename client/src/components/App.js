@@ -1,8 +1,10 @@
-import '../App.css';
+// import '../App.css';
 import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import Login from './Login.js'
 import NavBar from './NavBar.js'
+import AllMoviesList from '../pages/AllMoviesList.js'
+
 
 function App() {
   const [user, setUser] = useState(null);
@@ -22,16 +24,11 @@ function App() {
       <NavBar setUser={setUser}/>
       <main>
         <Routes>
-          <Route path="/"/>
+        <Route path="/" element ={<AllMoviesList user={user} />}/>
+        <Route path="/allmovies" element ={<AllMoviesList user={user} />}/>
         </Routes>
       </main>
     </>
-    // <div className="App">
-    //   <header className="App-header">
-    //     <h2>Hello</h2>
-    //     <p>Welcome to Seen It.</p>
-    //   </header>
-    // </div>
   );
 }
 

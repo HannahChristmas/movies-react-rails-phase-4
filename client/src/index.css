@@ -38,3 +38,7 @@ nav a:hover{
   padding-right: 4rem;
   padding-top: 1.3rem;
 }
+
+.poster {
+  height: 20rem;
+}
