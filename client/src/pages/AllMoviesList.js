@@ -27,6 +27,7 @@ function AllMoviesList(){
                             &nbsp;·&nbsp;
                             <cite><b>Director:</b> {movie.director}</cite><br></br><br></br>
                         </p>
+                        <Link to={`/movies/${movie.id}`}>Reviews</Link>
                         </Box>
                     </Movie>
                 ))

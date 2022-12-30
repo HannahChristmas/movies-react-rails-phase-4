@@ -4,6 +4,8 @@ import { Routes, Route } from "react-router-dom";
 import Login from './Login.js'
 import NavBar from './NavBar.js'
 import AllMoviesList from '../pages/AllMoviesList.js'
+import MovieCard from '../pages/MovieCard.js'
+
 
 
 function App() {
@@ -26,6 +28,7 @@ function App() {
         <Routes>
         <Route path="/" element ={<AllMoviesList user={user} />}/>
         <Route path="/allmovies" element ={<AllMoviesList user={user} />}/>
+        <Route path="/movies/:id" element ={<MovieCard user={user}/>}/>
         </Routes>
       </main>
     </>
