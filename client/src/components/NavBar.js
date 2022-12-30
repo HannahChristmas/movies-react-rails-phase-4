@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function NavBar({ setUser }){
 
@@ -11,10 +12,22 @@ function NavBar({ setUser }){
     }
 
     return(
-        <>
-            <h2>SEEN IT</h2>
-            <button onClick={handleLogoutClick}>Logout</button>
-        </>
+        <div className="header">
+            <nav>
+                <Link to ="/allmovies">ALL MOVIES</Link>
+                <Link to ="/mymovies">MY MOVIES</Link>
+                <Link to ="/new">ADD MOVIE</Link>
+                {/* <Link to ="/addrecipe"><img className="navImage"src={dinnerborder} alt={"dinner"}></img></Link> */}
+                <button onClick={handleLogoutClick}>Logout</button>
+            </nav>
+        </div>
+        // <>
+        //     <h2 as={Link} to="/allmovies">SEEN IT</h2>
+        //     <button as={Link} to="/allmovies">All Movies</button>
+        //     <button as={Link} to="/mymovies">My Movies</button>
+        //     <button as={Link} to="/new">Add Movie</button>
+        //     <button onClick={handleLogoutClick}>Logout</button>
+        // </>
     )
 }
 

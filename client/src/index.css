@@ -11,3 +11,30 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.header{
+  background-color: #FFEFE4;
+  height: 8rem;
+}
+
+nav a {
+  /* display: inline-flex; */
+  padding-top: 1.5rem;
+  margin: 2rem;
+  text-decoration: none;
+  font-size: 1.2em;
+  color: #712628;
+  transition: 0.1s;
+  vertical-align: middle;
+  line-height: 8rem;
+}
+nav a:hover{
+  color: #F76507;
+  border-bottom: 2px solid #40BA93;
+}
+.navImage{
+  height: 5.5rem;
+  float: right;
+  padding-right: 4rem;
+  padding-top: 1.3rem;
+}
