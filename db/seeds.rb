@@ -11,6 +11,6 @@ movie1 = Movie.create(title: 'The Lion King', genre: 'Musical', year: 1994, dire
 
 puts "🍿 Seeding users..."
 
-movie1 = User.create(username: 'HannahChrissy', password_digest: "I don't know", avatar_urL: "https://t4.ftcdn.net/jpg/02/65/00/69/240_F_265006936_2dlz2VtcqZZUbco1VnDpU2diyd8OagFS.jpg")
+user1 = User.create(username: 'HannahChrissy', password_digest: "I don't know", avatar_url: "https://t4.ftcdn.net/jpg/02/65/00/69/240_F_265006936_2dlz2VtcqZZUbco1VnDpU2diyd8OagFS.jpg")
 
 puts "✅ Done seeding!"
