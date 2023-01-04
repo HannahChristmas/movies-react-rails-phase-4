@@ -7,9 +7,6 @@ import AllMoviesList from '../pages/AllMoviesList.js'
 import MovieCard from '../pages/MovieCard.js'
 import UserReviewsList from "../pages/UserReviewsList";
 
-
-
-
 function App() {
   const [user, setUser] = useState(null);
 

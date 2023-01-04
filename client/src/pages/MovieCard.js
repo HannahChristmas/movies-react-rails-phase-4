@@ -7,7 +7,6 @@ import NewReview from './NewReview.js'
 
 function MovieCard( {user} ) {
     const { id } = useParams();    
-    // const [userHasReview, setUserHasReview] = useState(false);
     const [{ data: movie, error, status }, setMovie] = useState({
         data: null,
         error: null,
@@ -30,7 +29,6 @@ function MovieCard( {user} ) {
         });
     }, [id]);
 
-    // After the review is added, refresh the page.
     function handleAddReview(newReview) {
         setMovie({
           error,
@@ -54,15 +52,8 @@ function MovieCard( {user} ) {
                 <h1>{movie.genre}</h1>
                 <h1>{movie.year}</h1>
             </Box>
-
             <Box>
                 <NewReview handleAddReview={handleAddReview} movieId={movie.id} userId={user.id}></NewReview>
-           
-           {/* If user.id */}
-                
-                {/* <button type="submit">{userHasReview ? null : "Write a review!"}</button> */}
-
-
                 {movie.movies_with_reviews.map((review) => (
                     <Box key={review.id}>
                         {review.review_content}<br></br><br></br>

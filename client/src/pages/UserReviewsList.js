@@ -1,26 +1,16 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Box, Button } from "../styles";
-// import { useParams } from "react-router";
-// import UserMovieReview from "./UserMovieReview";
-
 
 function UserReviewsList({user}) {
 
   const [userReviews, setUserReviews] = useState([]);
-  // const { id } = useParams();
 
   useEffect(() => {
     fetch("/myreviews")
     .then(r => r.json())
     .then(userReviews => setUserReviews(userReviews))
   }, [])
-
-// function handleDeleteReview(id) {
-//     const updatedReviewsArray = userReviews.reviews.filter((review) => review.id !== id);
-//     setUserReviews(updatedReviewsArray)
-// }
 
   return (
     <Wrapper>

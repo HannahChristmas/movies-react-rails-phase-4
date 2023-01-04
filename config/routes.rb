@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy'
   post '/new', to: 'movies#create'
   get '/myreviews', to: 'reviews#my_reviews'
+  post '/update', to: 'reviews#update'
+
   
   # Leave this here to help deploy your app later!
   get "*path", to: "fallback#index", constraints: ->(req) { !req.xhr? && req.format.html? }
