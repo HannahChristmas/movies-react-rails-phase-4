@@ -35,7 +35,7 @@ function MovieCard( {user} ) {
           status,
           data: {
             ...movie,
-            reviews: [...movie.reviews, newReview],
+            reviews: [...movie.movies_with_reviews, newReview],
           },
         });
       }
@@ -54,7 +54,9 @@ function MovieCard( {user} ) {
             </Box>
 
             <Box>
-                <h1>sup</h1>
+                <NewReview handleAddReview={handleAddReview} movieId={movie.id} userId={user.id}></NewReview>
+
+
                 {/* if @current_user has not posted a review, 
                 return Add A Review button
                 else return null*/}
@@ -67,7 +69,7 @@ function MovieCard( {user} ) {
 
                 {movie.movies_with_reviews.map((review) => (
                     <Box key={review.id}>
-                        {review.review_content}<br></br>
+                        {review.review_content}<br></br><br></br>
                         by: <em>{review.username}</em><br></br>
                     </Box>
                 ))}
