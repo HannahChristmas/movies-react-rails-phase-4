@@ -21,11 +21,6 @@ class MoviesController < ApplicationController
         render json: movie, status: 202
     end
 
-    def my_movies
-        movies = @current_user.movies 
-        render json: movies
-    end
-
     private 
 
     def movie_params

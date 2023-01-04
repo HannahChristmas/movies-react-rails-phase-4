@@ -17,6 +17,8 @@ function MovieCard( {user} ) {
     useEffect(() => {
         fetch(`/movies/${id}`).then((r) => {
             if (r.ok) {
+                console.log(user)
+
                 r.json().then((movie) =>
                 setMovie({ data: movie, error: null, status: "resolved"})
                 );
@@ -55,16 +57,10 @@ function MovieCard( {user} ) {
 
             <Box>
                 <NewReview handleAddReview={handleAddReview} movieId={movie.id} userId={user.id}></NewReview>
-
-
-                {/* if @current_user has not posted a review, 
-                return Add A Review button
-                else return null*/}
+           
+           {/* If user.id */}
                 
-                {/* <button type="submit">{isLoading ? "Loading..." : "Login"}</button> */}
-                {/* <Button>{userHasReview ? "Nice! You've reviewed this movie" : "Add a review"}</Button> */}
-                {/* <Button>Add Review</Button> */}
-                {/* <NewReview movieId={movie.id} userId={user.id}/> */}
+                {/* <button type="submit">{userHasReview ? null : "Write a review!"}</button> */}
 
 
                 {movie.movies_with_reviews.map((review) => (

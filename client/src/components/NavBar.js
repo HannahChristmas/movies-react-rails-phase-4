@@ -16,7 +16,7 @@ function NavBar({ setUser }){
             <nav>
                 <Link to ="/allmovies">SEEN IT</Link>
                 <Link to ="/allmovies">ALL MOVIES</Link>
-                <Link to ="/mymovies">MY MOVIES</Link>
+                <Link to ="/myreviews">MY REVIEWS</Link>
                 <Link to ="/new">ADD MOVIE</Link>
                 {/* <Link to ="/addrecipe"><img className="navImage"src={dinnerborder} alt={"dinner"}></img></Link> */}
                 <button onClick={handleLogoutClick}>Logout</button>

@@ -5,6 +5,8 @@ import Login from './Login.js'
 import NavBar from './NavBar.js'
 import AllMoviesList from '../pages/AllMoviesList.js'
 import MovieCard from '../pages/MovieCard.js'
+import UserReviewsList from "../pages/UserReviewsList";
+
 
 
 
@@ -27,6 +29,7 @@ function App() {
       <main>
         <Routes>
         <Route path="/" element ={<AllMoviesList user={user} />}/>
+        <Route path="/myreviews" element={<UserReviewsList user={user} />}/>
         <Route path="/allmovies" element ={<AllMoviesList user={user} />}/>
         <Route path="/movies/:id" element ={<MovieCard user={user}/>}/>
         </Routes>

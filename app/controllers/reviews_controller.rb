@@ -22,6 +22,11 @@ class ReviewsController < ApplicationController
         head :no_content
     end
 
+    def my_reviews
+        reviews = @current_user.reviews 
+        render json: reviews
+    end
+
     private 
 
     def review_params 

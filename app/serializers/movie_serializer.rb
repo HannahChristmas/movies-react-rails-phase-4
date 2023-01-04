@@ -6,9 +6,10 @@ class MovieSerializer < ActiveModel::Serializer
   def movies_with_reviews
     # byebug
     object.reviews.map { |review|
-      {review_content: review.review_content,
+      {review_id: review.id,
+      review_content: review.review_content,
       username: review.user.username,
-      id: review.id
+      user_id: review.user.id
       }
     }
   end
