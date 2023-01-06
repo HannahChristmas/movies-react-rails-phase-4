@@ -1,3 +1,4 @@
+import zIndex from "@mui/material/styles/zIndex";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import styled from "styled-components";
@@ -62,6 +63,13 @@ function MovieCard( {user, movies } ) {
                     <Box key={review.review_id}>
                         {review.review_content}<br></br><br></br>
                         by: <em>{review.username}</em><br></br>
+                        {review.user_id === user.id ?
+                        <>
+                            <button>Delete</button>    
+                            <button>Edit</button>    
+                            </>
+                            : null
+                    }
                     </Box>
                 ))}
             
