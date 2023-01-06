@@ -28,6 +28,10 @@ function MovieCard( {user, movies, setMovies, handleAddReview} ) {
         setMovie(...movie.movies_with_reviews, newReview)
         console.log(movie)
 
+        fetch("/movies")
+        .then(r => r.json())
+        .then(movies => setMovies(movies))
+
         // const updatedMovies = movies.map(obj => {
         //     if(obj.id === movie.id) {
 
