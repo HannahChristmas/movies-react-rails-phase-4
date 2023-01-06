@@ -6,13 +6,12 @@ import { Box } from "../styles";
 import NewReview from './NewReview.js'
 
 function MovieCard( {user, movies } ) {
-    const { id } = useParams();    
+    const { id } = useParams();   
     const [movie, setMovie] = useState({});
     const [status, setStatus] = useState("pending")
     const foundMovie = movies.find(mov => mov.id === parseInt(id))
     
     useEffect(() => {
-        // console.log(foundMovie.movies_with_reviews)
         if (foundMovie) {
             setMovie(foundMovie)
             setStatus("found")
@@ -26,11 +25,28 @@ function MovieCard( {user, movies } ) {
         setMovie({...foundMovie})
     }
 
+    const handleDelete = (id) => {
+        fetch(`/reviews/${id}`, {
+          method: 'DELETE'
+        })
+        .then(r => {
+          if (r.ok) {
+            const filteredReview = movie.movies_with_reviews.filter(review => {
+                return review.review_id !== id
+            })
+            foundMovie.movies_with_reviews = filteredReview 
+        // we wrap it in the curly braces to make a new object. If we don't wrap it, we only get the keys. 
+
+        // Why do we need to make a new object? 
+            setMovie({...foundMovie})
+          }
+        })
+      }
+
     if (status === "pending") return <h2>Loading...</h2>;
     // Don't want another fetch request just for errors. 
     if (status === "rejected") return <h2>Error: Movie doesn't exist</h2>;
 
-    // Function out here to check for user_id
     function hasUserReviewedThis(param1) {
         let result = false
         param1.movies_with_reviews.forEach((item) => {
@@ -65,7 +81,7 @@ function MovieCard( {user, movies } ) {
                         by: <em>{review.username}</em><br></br>
                         {review.user_id === user.id ?
                         <>
-                            <button>Delete</button>    
+                            <button onClick={() => handleDelete(review.review_id)}>Delete</button>    
                             <button>Edit</button>    
                             </>
                             : null
