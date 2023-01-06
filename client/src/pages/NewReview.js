@@ -19,18 +19,22 @@ function NewReview({ handleAddReview, userId, movieId }){
           body: JSON.stringify(formData),
         }).then((r) => {
           if (r.ok) {
-            r.json().then((newReview) => {
+            r.json().then((movieFromForm) => {
               setReviewContent("");
               setErrors([]);
-              handleAddReview(newReview);
+              handleAddReview(movieFromForm.movies_with_reviews);
             });
           } else {
             r.json().then((err) => setErrors(err.errors));
           }
         });
       }
+    
+    function handleChange(target) {
+        setReviewContent(target)
+    }
 
-    return(
+    return(     
         <form onSubmit={handleSubmit}>
         <h2>Add New Review</h2>
         <div>
@@ -39,7 +43,7 @@ function NewReview({ handleAddReview, userId, movieId }){
             type="text"
             id="review"
             value={reviewContent}
-            onChange={(e) => setReviewContent(e.target.value)}
+            onChange={(e) => handleChange(e.target.value)}
           />
         </div>
         {errors?.map((err) => (

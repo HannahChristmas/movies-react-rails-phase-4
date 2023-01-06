@@ -4,17 +4,14 @@ import styled from "styled-components";
 import { Box } from "../styles";
 import NewReview from './NewReview.js'
 
-function MovieCard( {user, movies, setMovies, handleAddReview} ) {
+function MovieCard( {user, movies } ) {
     const { id } = useParams();    
     const [movie, setMovie] = useState({});
     const [status, setStatus] = useState("pending")
-    console.log(id)
-    console.log(movies)
+    const foundMovie = movies.find(mov => mov.id === parseInt(id))
     
     useEffect(() => {
-        const foundMovie = movies.find(mov => mov.id === parseInt(id))
-        console.log(foundMovie)
-        // setMovie(foundMovie)
+        console.log(foundMovie.movies_with_reviews)
         if (foundMovie) {
             setMovie(foundMovie)
             setStatus("found")
@@ -23,28 +20,9 @@ function MovieCard( {user, movies, setMovies, handleAddReview} ) {
         }
     }, [id, movies])
 
-    function handleAddReview(newReview) {
-        // debugger
-        setMovie(...movie.movies_with_reviews, newReview)
-        console.log(movie)
-
-        fetch("/movies")
-        .then(r => r.json())
-        .then(movies => setMovies(movies))
-
-        // const updatedMovies = movies.map(obj => {
-        //     if(obj.id === movie.id) {
-
-        //         console.log("This logic do be workin")
-        //         setMovies(...obj.movies_with_reviews, newReview)
-        //         // obj.movies_with_reviews.push(newReview)
-        //         // setMovies(updatedMovies)
-        //         return obj
-        //     } else {
-        //         console.log("this ain't workin.")
-        //         return movies
-        //     }
-        // })
+    function handleAddReview(updatedReviews) {
+        foundMovie.movies_with_reviews = updatedReviews
+        setMovie({...foundMovie})
     }
 
     if (status === "pending") return <h2>Loading...</h2>;
@@ -63,7 +41,7 @@ function MovieCard( {user, movies, setMovies, handleAddReview} ) {
             <Box>
                 <NewReview handleAddReview={handleAddReview} movieId={movie.id} userId={user.id}></NewReview>
                 {movie.movies_with_reviews?.map((review) => (
-                    <Box key={review.id}>
+                    <Box key={review.review_id}>
                         {review.review_content}<br></br><br></br>
                         by: <em>{review.username}</em><br></br>
                     </Box>
