@@ -14,20 +14,12 @@ function NavBar({ setUser }){
     return(
         <div className="header">
             <nav>
-                <Link to ="/allmovies">ALL MOVIES</Link>
-                <Link to ="/myreviews">MY REVIEWS</Link>
+                <Link to ="/movies">ALL MOVIES</Link>
+                <Link to ="/reviews">MY REVIEWS</Link>
                 <Link to ="/new">ADD MOVIE</Link>
-                {/* <Link to ="/addrecipe"><img className="navImage"src={dinnerborder} alt={"dinner"}></img></Link> */}
                 <button onClick={handleLogoutClick}>Logout</button>
             </nav>
         </div>
-        // <>
-        //     <h2 as={Link} to="/allmovies">SEEN IT</h2>
-        //     <button as={Link} to="/allmovies">All Movies</button>
-        //     <button as={Link} to="/mymovies">My Movies</button>
-        //     <button as={Link} to="/new">Add Movie</button>
-        //     <button onClick={handleLogoutClick}>Logout</button>
-        // </>
     )
 }
 

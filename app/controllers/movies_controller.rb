@@ -6,7 +6,8 @@ class MoviesController < ApplicationController
     end
 
     def show 
-        movie = Movie.find(params[:id])
+        # Find_by is preferred
+        movie = Movie.find_by(id: params[:id])
         render json: movie
     end
 

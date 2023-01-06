@@ -9,6 +9,13 @@ import UserReviewsList from "../pages/UserReviewsList";
 
 function App() {
   const [user, setUser] = useState(null);
+  const [movies, setMovies] = useState([]);
+
+  useEffect(() => {
+      fetch("/movies")
+      .then(r => r.json())
+      .then(movies => setMovies(movies))
+    }, [])
 
   useEffect(() => {
     fetch("/me").then((res) => {
@@ -25,10 +32,10 @@ function App() {
       <NavBar setUser={setUser}/>
       <main>
         <Routes>
-        <Route path="/" element ={<AllMoviesList user={user} />}/>
-        <Route path="/myreviews" element={<UserReviewsList user={user} />}/>
-        <Route path="/allmovies" element ={<AllMoviesList user={user} />}/>
-        <Route path="/movies/:id" element ={<MovieCard user={user}/>}/>
+        <Route path="/" element ={<AllMoviesList user={user} movies={movies}/>}/>
+        <Route path="/reviews" element={<UserReviewsList user={user} />}/>
+        <Route path="/movies" element ={<AllMoviesList user={user} movies={movies} />}/>
+        <Route path="/movies/:id" element ={<MovieCard user={user} movies={movies} setMovies={setMovies}/>}/>
         </Routes>
       </main>
     </>

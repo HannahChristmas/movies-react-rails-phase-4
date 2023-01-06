@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   
   resources :reviews
-  resources :users
+  resources :users do 
+    resources :reviews
+  end
   resources :movies
   # Routing logic: fallback requests for React Router.
   post '/signup', to: 'users#create'
@@ -10,6 +12,9 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy'
   post '/new', to: 'movies#create'
   get '/myreviews', to: 'reviews#my_reviews'
+  get '/myreviews/:id', to: 'reviews#my_single_review'
+  delete '/myreviews/:id', to: 'reviews#destroy'
+  patch '/myreviews/:id', to: 'reviews#update'
   post '/update', to: 'reviews#update'
 
   

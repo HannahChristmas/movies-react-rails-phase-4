@@ -1,48 +1,52 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import styled from "styled-components";
-import { Box, Button } from "../styles";
+import { Box } from "../styles";
 import NewReview from './NewReview.js'
 
-
-function MovieCard( {user} ) {
+function MovieCard( {user, movies, setMovies, handleAddReview} ) {
     const { id } = useParams();    
-    const [{ data: movie, error, status }, setMovie] = useState({
-        data: null,
-        error: null,
-        status: "pending",
-      });
-
+    const [movie, setMovie] = useState({});
+    const [status, setStatus] = useState("pending")
+    console.log(id)
+    console.log(movies)
+    
     useEffect(() => {
-        fetch(`/movies/${id}`).then((r) => {
-            if (r.ok) {
-                console.log(user)
-
-                r.json().then((movie) =>
-                setMovie({ data: movie, error: null, status: "resolved"})
-                );
-            } else {
-                r.json().then((err) =>
-                setMovie({ data: null, error: err.error, status: "rejected" })
-                );
-            }
-        });
-    }, [id]);
+        const foundMovie = movies.find(mov => mov.id === parseInt(id))
+        console.log(foundMovie)
+        // setMovie(foundMovie)
+        if (foundMovie) {
+            setMovie(foundMovie)
+            setStatus("found")
+        } else {
+            setStatus("rejected")
+        }
+    }, [id, movies])
 
     function handleAddReview(newReview) {
-        setMovie({
-          error,
-          status,
-          data: {
-            ...movie,
-            reviews: [...movie.movies_with_reviews, newReview],
-          },
-        });
-      }
+        // debugger
+        setMovie(...movie.movies_with_reviews, newReview)
+        console.log(movie)
 
-      if (status === "pending") return <h2>Loading...</h2>;
-      if (status === "rejected") return <h2>Error: {error}</h2>;
-    
+        // const updatedMovies = movies.map(obj => {
+        //     if(obj.id === movie.id) {
+
+        //         console.log("This logic do be workin")
+        //         setMovies(...obj.movies_with_reviews, newReview)
+        //         // obj.movies_with_reviews.push(newReview)
+        //         // setMovies(updatedMovies)
+        //         return obj
+        //     } else {
+        //         console.log("this ain't workin.")
+        //         return movies
+        //     }
+        // })
+    }
+
+    if (status === "pending") return <h2>Loading...</h2>;
+    // Don't want another fetch request just for errors. 
+    if (status === "rejected") return <h2>Error: Movie doesn't exist</h2>;
+
 
     return (
         <Wrapper>
@@ -54,7 +58,7 @@ function MovieCard( {user} ) {
             </Box>
             <Box>
                 <NewReview handleAddReview={handleAddReview} movieId={movie.id} userId={user.id}></NewReview>
-                {movie.movies_with_reviews.map((review) => (
+                {movie.movies_with_reviews?.map((review) => (
                     <Box key={review.id}>
                         {review.review_content}<br></br><br></br>
                         by: <em>{review.username}</em><br></br>

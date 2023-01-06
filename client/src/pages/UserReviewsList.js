@@ -1,16 +1,55 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Box, Button } from "../styles";
+import { Box } from "../styles";
+// import { useParams } from "react-router";
+
 
 function UserReviewsList({user}) {
 
   const [userReviews, setUserReviews] = useState([]);
+  const [reviewContent, setReviewContent] = useState("");
+  const [errors, setErrors] = useState([]);
+  // const { id } = useParams();    
+  // const individualReview = user.reviews.find(rev => rev.id === id)
 
   useEffect(() => {
-    fetch("/myreviews")
+    fetch("/reviews")
     .then(r => r.json())
     .then(userReviews => setUserReviews(userReviews))
   }, [])
+
+  const handleDelete = (id) => {
+    fetch(`/reviews/${id}`, {
+      method: 'DELETE'
+    })
+    .then(r => {
+      if (r.ok) {
+        const filteredReview = userReviews.filter(review => review.id !== id)
+        setUserReviews(filteredReview)
+      }
+    })
+  }
+
+  const handleEdit = (e) => {
+    e.preventDefault();
+    console.log("Doesn't work")
+    // const newReview = {review_content: reviewContent}
+    // fetch(`/myreviews/${id}`, {
+    //   method: 'PATCH',
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   }, 
+    //   body: JSON.stringify(newReview)
+    // })
+    // .then(r => {
+    //   if (r.ok) {
+    //     const filteredReview = userReviews.map(review => review.id === newReview.id ? newReview : review )
+    //     setUserReviews(filteredReview)
+    //   }
+    // })
+  }
+
+  // if review.length = 0, add a review button or something
 
   return (
     <Wrapper>
@@ -29,8 +68,26 @@ function UserReviewsList({user}) {
               <Box>
                 <h1>My Review:</h1>
                 <p>{review.review_content}</p>
-                <button>Edit Review</button> <button>Delete Review</button>
-
+                {/* Anonymous function pointing to onDeleteClick */}
+                <button onClick={() => handleDelete(review.id)}>Delete Review</button><br></br><br></br>
+                {/* Form that appears when you click on edit review */}
+                <form onSubmit={() => handleEdit(review.id)}>
+                  <div>
+                    <label htmlFor="review">Review</label>
+                    <input
+                      type="text"
+                      id="review"
+                      value={reviewContent}
+                      onChange={(e) => setReviewContent(e.target.value)}
+                    />
+                  </div>
+                  {errors?.map((err) => (
+                    <p key={err} style={{ color: "red" }}>
+                      {err}
+                    </p>
+                  ))}
+                  <button type="submit">Submit</button>
+                </form>
               </Box>
             </Box>  
           </Movie>

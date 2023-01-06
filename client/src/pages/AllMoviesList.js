@@ -1,21 +1,13 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Box, Button } from "../styles";
 
-function AllMoviesList(){
-    const [allMovies, setAllMovies] = useState([]);
-
-    useEffect(() => {
-        fetch("/movies")
-        .then(r => r.json())
-        .then(allMovies => setAllMovies(allMovies))
-      }, [])
+function AllMoviesList({movies}){
 
     return (
         <Wrapper>
-            {allMovies.length > 0 ? (
-                allMovies.map((movie) => (
+            {movies.length > 0 ? (
+                movies.map((movie) => (
                     <Movie key={movie.id}>
                         <Box>
                         <img className="poster" alt={movie.title}src={movie.image_url}/>
@@ -27,6 +19,8 @@ function AllMoviesList(){
                             &nbsp;·&nbsp;
                             <cite><b>Director:</b> {movie.director}</cite><br></br><br></br>
                         </p>
+                        {/* Send the param of movie */}
+                        {/* Too many fetches. Fewer the better. */}
                         <Link to={`/movies/${movie.id}`}>Reviews</Link>
                         </Box>
                     </Movie>
@@ -52,7 +46,5 @@ const Wrapper = styled.section`
 const Movie = styled.article`
   margin-bottom: 24px;
 `;
-
-
 
 export default AllMoviesList;
