@@ -11,7 +11,7 @@ function MovieCard( {user, movies } ) {
     const foundMovie = movies.find(mov => mov.id === parseInt(id))
     
     useEffect(() => {
-        console.log(foundMovie.movies_with_reviews)
+        // console.log(foundMovie.movies_with_reviews)
         if (foundMovie) {
             setMovie(foundMovie)
             setStatus("found")
@@ -29,6 +29,16 @@ function MovieCard( {user, movies } ) {
     // Don't want another fetch request just for errors. 
     if (status === "rejected") return <h2>Error: Movie doesn't exist</h2>;
 
+    // Function out here to check for user_id
+    function hasUserReviewedThis(param1) {
+        let result = false
+        param1.movies_with_reviews.forEach((item) => {
+            if(item.user_id === user.id) {
+                result = true;
+            }
+        })
+        return result;
+    }
 
     return (
         <Wrapper>
@@ -39,7 +49,15 @@ function MovieCard( {user, movies } ) {
                 <h1>{movie.year}</h1>
             </Box>
             <Box>
-                <NewReview handleAddReview={handleAddReview} movieId={movie.id} userId={user.id}></NewReview>
+
+                {/* if foundMovie.movies_with_reviews.user.id */}
+                {hasUserReviewedThis(foundMovie)
+                // put edit review card instead of null 
+                    ? null 
+                    :
+                    <NewReview handleAddReview={handleAddReview} movieId={movie.id} userId={user.id}></NewReview>
+                }
+
                 {movie.movies_with_reviews?.map((review) => (
                     <Box key={review.review_id}>
                         {review.review_content}<br></br><br></br>
