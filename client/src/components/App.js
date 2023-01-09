@@ -6,10 +6,13 @@ import NavBar from './NavBar.js'
 import AllMoviesList from '../pages/AllMoviesList.js'
 import MovieCard from '../pages/MovieCard.js'
 import UserReviewsList from "../pages/UserReviewsList";
+import NewMovie from "../pages/NewMovie";
+
 
 function App() {
   const [user, setUser] = useState(null);
   const [movies, setMovies] = useState([]);
+  console.log("MOVIES FROM APP", movies)
 
   useEffect(() => {
       fetch("/movies")
@@ -35,6 +38,7 @@ function App() {
         <Route path="/" element ={<AllMoviesList user={user} movies={movies}/>}/>
         <Route path="/movies" element ={<AllMoviesList user={user} movies={movies} />}/>
         <Route path="/movies/:id" element ={<MovieCard user={user} movies={movies} setMovies={setMovies}/>}/>
+        <Route path="/new" element={<NewMovie user={user} />}/>
         <Route path="/reviews" element={<UserReviewsList user={user} />}/>
         </Routes>
       </main>

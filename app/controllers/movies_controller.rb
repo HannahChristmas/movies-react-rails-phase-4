@@ -11,8 +11,14 @@ class MoviesController < ApplicationController
         render json: movie
     end
 
+    # def create 
+    #     movie = @current_user.movies.create!(movie_params)
+    #     render json: movie, status: :created
+    # end
+
     def create 
-        movie = @current_user.movies.create!(movie_params)
+        # byebug
+        movie = Movie.create(movie_params)
         render json: movie, status: :created
     end
 

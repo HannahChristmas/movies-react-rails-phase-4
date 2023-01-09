@@ -18,6 +18,9 @@ function UserReviewsList({user}) {
     .then(userReviews => setUserReviews(userReviews))
   }, [])
 
+
+  // Instead of a fetch to reviews, find movies with username. go through the movies and look at reviews for each. pull them out.  
+
   const handleDeleteReview = (id) => {
     fetch(`/reviews/${id}`, {
       method: 'DELETE'
@@ -26,6 +29,7 @@ function UserReviewsList({user}) {
       if (r.ok) {
         const filteredReview = userReviews.filter(review => review.id !== id)
         setUserReviews(filteredReview)
+        console.log("FROM INSIDE OF USER REVIEW LIST AFTER DELETE IS CLICKED: These will be only the reviews that are left.", filteredReview)
       }
     })
   }

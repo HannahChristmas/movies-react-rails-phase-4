@@ -4,6 +4,8 @@ import { Box, Button } from "../styles";
 
 function AllMoviesList({movies}){
 
+    
+
     return (
         <Wrapper>
             {movies.length > 0 ? (
@@ -21,7 +23,10 @@ function AllMoviesList({movies}){
                         </p>
                         {/* Send the param of movie */}
                         {/* Too many fetches. Fewer the better. */}
+                        {/* Can I not link this directly to a component so that I can pass stuff down to it??? */}
                         <Link to={`/movies/${movie.id}`}>Reviews</Link>
+                        {/* <Link to={<MovieCard></MovieCard>}>Reviews</Link> */}
+
                         </Box>
                     </Movie>
                 ))

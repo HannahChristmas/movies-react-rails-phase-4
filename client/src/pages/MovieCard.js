@@ -6,8 +6,7 @@ import { Box } from "../styles";
 import NewReview from './NewReview.js'
 import DeleteReview from './DeleteReview.js'
 
-
-function MovieCard( {user, movies } ) {
+function MovieCard( {user, movies, setMovies } ) {
     const { id } = useParams();   
     const [movie, setMovie] = useState({});
     const [status, setStatus] = useState("pending")
@@ -25,9 +24,21 @@ function MovieCard( {user, movies } ) {
     function handleAddReview(updatedReviews) {
         foundMovie.movies_with_reviews = updatedReviews
         setMovie({...foundMovie})
+        const newMovies = movies.map(mov => {
+            // 
+            if ( foundMovie.id === mov.id ){
+                return foundMovie
+            } else {
+                return mov
+            }
+        })
+        setMovies(newMovies)
+
+        // setMovies() map through original movies array. find the movie we are talking about. if this is the movie that needs to be changed, put in the found movie. 
     }
 
     const handleDelete = (id) => {
+        console.log(movies)
         fetch(`/reviews/${id}`, {
           method: 'DELETE'
         })
@@ -41,6 +52,18 @@ function MovieCard( {user, movies } ) {
 
         // Why do we need to make a new object? 
             setMovie({...foundMovie})
+            console.log(movies)
+            const newMovies = movies.map(mov => {
+                // 
+                if ( foundMovie.id === mov.id ){
+                    return foundMovie
+                } else {
+                    return mov
+                }
+            })
+            setMovies(newMovies)
+
+            // console.log("FROM INSIDE OF MOVIE CARD AFTER DELETE IS CLICKED:", foundMovie)
           }
         })
       }
