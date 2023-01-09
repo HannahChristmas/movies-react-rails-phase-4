@@ -33,9 +33,9 @@ function App() {
       <main>
         <Routes>
         <Route path="/" element ={<AllMoviesList user={user} movies={movies}/>}/>
-        {/* <Route path="/reviews" element={<UserReviewsList user={user} />}/> */}
         <Route path="/movies" element ={<AllMoviesList user={user} movies={movies} />}/>
         <Route path="/movies/:id" element ={<MovieCard user={user} movies={movies} setMovies={setMovies}/>}/>
+        <Route path="/reviews" element={<UserReviewsList user={user} />}/>
         </Routes>
       </main>
     </>

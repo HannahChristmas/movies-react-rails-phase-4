@@ -1,9 +1,11 @@
-import zIndex from "@mui/material/styles/zIndex";
+// import zIndex from "@mui/material/styles/zIndex";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import styled from "styled-components";
 import { Box } from "../styles";
 import NewReview from './NewReview.js'
+import DeleteReview from './DeleteReview.js'
+
 
 function MovieCard( {user, movies } ) {
     const { id } = useParams();   
@@ -81,8 +83,10 @@ function MovieCard( {user, movies } ) {
                         by: <em>{review.username}</em><br></br>
                         {review.user_id === user.id ?
                         <>
-                            <button onClick={() => handleDelete(review.review_id)}>Delete</button>    
-                            <button>Edit</button>    
+                        {/* Instead of this being a button, make it a JSX to a button  */}
+                            <DeleteReview handleDelete={handleDelete} review={review.review_id}></DeleteReview>
+                            {/* <button onClick={() => handleDelete(review.review_id)}>Delete</button>     */}
+                            {/* <button>Edit</button>     */}
                             </>
                             : null
                     }

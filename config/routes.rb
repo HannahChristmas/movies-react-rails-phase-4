@@ -11,10 +11,10 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
   post '/new', to: 'movies#create'
-  get '/myreviews', to: 'reviews#my_reviews'
-  get '/myreviews/:id', to: 'reviews#my_single_review'
-  delete '/myreviews/:id', to: 'reviews#destroy'
-  patch '/myreviews/:id', to: 'reviews#update'
+  # get '/myreviews', to: 'reviews#my_reviews'
+  # get '/myreviews/:id', to: 'reviews#my_single_review'
+  # delete '/myreviews/:id', to: 'reviews#destroy'
+  # patch '/myreviews/:id', to: 'reviews#update'
   post '/update', to: 'reviews#update'
 
   
