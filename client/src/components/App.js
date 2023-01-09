@@ -28,6 +28,10 @@ function App() {
     });
   }, []);
 
+  function handleAddMovie(newMovie) {
+    setMovies([newMovie, ...movies])
+}
+
   if (!user) return <Login onLogin={setUser}/>
 
   return (
@@ -35,10 +39,10 @@ function App() {
       <NavBar setUser={setUser}/>
       <main>
         <Routes>
-        <Route path="/" element ={<AllMoviesList user={user} movies={movies}/>}/>
+        <Route path="/" element ={<AllMoviesList user={user} movies={movies} setMovies={setMovies}/>}/>
         <Route path="/movies" element ={<AllMoviesList user={user} movies={movies} />}/>
         <Route path="/movies/:id" element ={<MovieCard user={user} movies={movies} setMovies={setMovies}/>}/>
-        <Route path="/new" element={<NewMovie user={user} />}/>
+        <Route path="/new" element={<NewMovie user={user} handleAddMovie={handleAddMovie} />}/>
         <Route path="/reviews" element={<UserReviewsList user={user} />}/>
         </Routes>
       </main>

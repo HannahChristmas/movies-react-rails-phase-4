@@ -4,8 +4,6 @@ import { Box, Button } from "../styles";
 
 function AllMoviesList({movies}){
 
-    
-
     return (
         <Wrapper>
             {movies.length > 0 ? (

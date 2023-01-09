@@ -6,7 +6,7 @@ import { Button, Error, FormField, Input, Label } from "../styles";
 
 // import { Button, Error, FormField, Input, Label, Textarea } from "../styles";
 
-function NewMovie({ user }) {
+function NewMovie({ user, handleAddMovie }) {
   const [title, setTitle] = useState("A New Movie");
   const [genre, setGenre] = useState("");
   const [year, setYear] = useState("");
@@ -17,7 +17,7 @@ function NewMovie({ user }) {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   
-  
+
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -38,8 +38,12 @@ function NewMovie({ user }) {
     }).then((r) => {
       setIsLoading(false);
       if (r.ok) {
-        navigate("/");
-        // setMovies()
+        r.json().then((movieFromForm) => {
+            setErrors([]);
+            handleAddMovie(movieFromForm);
+            navigate("/");
+          });
+
       } else {
         r.json().then((err) => setErrors(err.errors));
       }
