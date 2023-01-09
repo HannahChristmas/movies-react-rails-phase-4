@@ -49,12 +49,8 @@ function MovieCard( {user, movies, setMovies } ) {
             })
             foundMovie.movies_with_reviews = filteredReview 
         // we wrap it in the curly braces to make a new object. If we don't wrap it, we only get the keys. 
-
-        // Why do we need to make a new object? 
             setMovie({...foundMovie})
-            console.log(movies)
             const newMovies = movies.map(mov => {
-                // 
                 if ( foundMovie.id === mov.id ){
                     return foundMovie
                 } else {
@@ -62,8 +58,6 @@ function MovieCard( {user, movies, setMovies } ) {
                 }
             })
             setMovies(newMovies)
-
-            // console.log("FROM INSIDE OF MOVIE CARD AFTER DELETE IS CLICKED:", foundMovie)
           }
         })
       }

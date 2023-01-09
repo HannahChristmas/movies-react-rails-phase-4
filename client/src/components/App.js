@@ -43,7 +43,7 @@ function App() {
         <Route path="/movies" element ={<AllMoviesList user={user} movies={movies} />}/>
         <Route path="/movies/:id" element ={<MovieCard user={user} movies={movies} setMovies={setMovies}/>}/>
         <Route path="/new" element={<NewMovie user={user} handleAddMovie={handleAddMovie} />}/>
-        <Route path="/reviews" element={<UserReviewsList user={user} />}/>
+        <Route path="/reviews" element={<UserReviewsList user={user} movies={movies} setMovies={setMovies}/>}/>
         </Routes>
       </main>
     </>

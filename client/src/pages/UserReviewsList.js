@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Box } from "../styles";
+import AllMoviesList from "./AllMoviesList";
 // import { useParams } from "react-router";
 
 
-function UserReviewsList({user}) {
+function UserReviewsList({user, movies, setMovies}) {
 
   const [userReviews, setUserReviews] = useState([]);
   const [reviewContent, setReviewContent] = useState("");
@@ -53,10 +54,38 @@ function UserReviewsList({user}) {
     // })
   }
 
+  const newestArray = movies.map((mov) => mov.movies_with_reviews.map((rev) => {
+    if (rev.user_id === user.id) {
+      console.log(mov.title)
+      console.log(rev.user_id)
+    } else {
+      console.log("This don't match")
+    }
+  }))
+
+  
+  // console.log("NEWEST ARRAY", newestArray)  
+
+
   // if review.length = 0, add a review button or something
 
   return (
     <Wrapper>
+      {movies.map((mov) => mov.movies_with_reviews.map((rev) => {
+    if (rev.user_id === user.id) {
+      return (
+        <>
+      <h1>{mov.title}</h1>
+      <h2>{rev.user_id}</h2>
+      </>
+      )
+    } else {
+      console.log("This don't match")
+    }
+  }))}
+      <Box>
+        <h1>Hey</h1>
+      </Box>
         {userReviews.map((review) => (
           <Movie key={review.id}>
             <Box>
