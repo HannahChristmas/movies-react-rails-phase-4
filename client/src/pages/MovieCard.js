@@ -25,8 +25,7 @@ function MovieCard( {user, movies, setMovies } ) {
         foundMovie.movies_with_reviews = updatedReviews
         setMovie({...foundMovie})
         const newMovies = movies.map(mov => {
-            // 
-            if ( foundMovie.id === mov.id ){
+            if (foundMovie.id === mov.id){
                 return foundMovie
             } else {
                 return mov

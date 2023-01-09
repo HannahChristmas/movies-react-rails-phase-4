@@ -74,10 +74,20 @@ function UserReviewsList({user, movies, setMovies}) {
       {movies.map((mov) => mov.movies_with_reviews.map((rev) => {
     if (rev.user_id === user.id) {
       return (
-        <>
-      <h1>{mov.title}</h1>
-      <h2>{rev.user_id}</h2>
-      </>
+        <Movie key={rev.id}>
+        <Box>
+          <img className="poster" alt={mov.title} src={mov.image_url}></img>
+          <h1>{mov.title}</h1>
+          <p>
+            <em><b>Genre:</b> {mov.genre}</em>
+            &nbsp;·&nbsp;
+            <cite><b>Year:</b> {mov.year}</cite>
+            &nbsp;·&nbsp;
+            <cite><b>Director:</b> {mov.director}</cite><br></br><br></br>
+          </p>
+          <p><em><b>My review:</b></em> {rev.review_content}</p>
+        </Box>
+        </Movie>
       )
     } else {
       console.log("This don't match")
