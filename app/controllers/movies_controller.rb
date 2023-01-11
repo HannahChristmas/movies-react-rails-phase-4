@@ -28,6 +28,12 @@ class MoviesController < ApplicationController
         render json: movie, status: 202
     end
 
+    def destroy 
+        movie = Movie.find(params[:id])
+        movie.destroy 
+        head :no_content
+    end
+
     private 
 
     def movie_params

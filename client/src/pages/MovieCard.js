@@ -11,6 +11,7 @@ function MovieCard( {user, movies, setMovies } ) {
     const [movie, setMovie] = useState({});
     const [status, setStatus] = useState("pending")
     const foundMovie = movies.find(mov => mov.id === parseInt(id))
+    console.log(foundMovie)
     
     useEffect(() => {
         if (foundMovie) {
@@ -23,6 +24,7 @@ function MovieCard( {user, movies, setMovies } ) {
 
     function handleAddReview(updatedReviews) {
         foundMovie.movies_with_reviews = updatedReviews
+        // updatedReviews is the entire reviews array
         setMovie({...foundMovie})
         const newMovies = movies.map(mov => {
             if (foundMovie.id === mov.id){

@@ -7,18 +7,26 @@ import AllMoviesList from '../pages/AllMoviesList.js'
 import MovieCard from '../pages/MovieCard.js'
 import UserReviewsList from "../pages/UserReviewsList";
 import NewMovie from "../pages/NewMovie";
-
+// import { useParams } from "react-router";
 
 function App() {
   const [user, setUser] = useState(null);
   const [movies, setMovies] = useState([]);
+  // const { id } = useParams();   
+
   console.log("MOVIES FROM APP", movies)
+
+  // const foundMovie = movies.find(mov => mov.id === parseInt(id))
+  // console.log("FROM APP:", foundMovie)
 
   useEffect(() => {
       fetch("/movies")
       .then(r => r.json())
       .then(movies => setMovies(movies))
     }, [])
+
+    console.log("MOVIES AFTER REFRESH", movies)
+
 
   useEffect(() => {
     fetch("/me").then((res) => {
@@ -41,7 +49,7 @@ function App() {
         <Routes>
         <Route path="/" element ={<AllMoviesList user={user} movies={movies} setMovies={setMovies}/>}/>
         <Route path="/movies" element ={<AllMoviesList user={user} movies={movies} />}/>
-        <Route path="/movies/:id" element ={<MovieCard user={user} movies={movies} setMovies={setMovies}/>}/>
+        <Route path="/movies/:id" element ={<MovieCard user={user} movies={movies} setMovies={setMovies} />}/>
         <Route path="/new" element={<NewMovie user={user} handleAddMovie={handleAddMovie} />}/>
         <Route path="/reviews" element={<UserReviewsList user={user} movies={movies} setMovies={setMovies}/>}/>
         </Routes>

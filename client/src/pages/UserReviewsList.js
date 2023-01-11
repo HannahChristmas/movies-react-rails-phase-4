@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Box } from "../styles";
-import AllMoviesList from "./AllMoviesList";
+// import AllMoviesList from "./AllMoviesList";
 // import { useParams } from "react-router";
 
 
@@ -13,11 +13,11 @@ function UserReviewsList({user, movies, setMovies}) {
   // const { id } = useParams();    
   // const individualReview = user.reviews.find(rev => rev.id === id)
 
-  useEffect(() => {
-    fetch("/reviews")
-    .then(r => r.json())
-    .then(userReviews => setUserReviews(userReviews))
-  }, [])
+  // useEffect(() => {
+  //   fetch("/reviews")
+  //   .then(r => r.json())
+  //   .then(userReviews => setUserReviews(userReviews))
+  // }, [])
 
 
   // Instead of a fetch to reviews, find movies with username. go through the movies and look at reviews for each. pull them out.  
@@ -54,18 +54,17 @@ function UserReviewsList({user, movies, setMovies}) {
     // })
   }
 
-  const newestArray = movies.map((mov) => mov.movies_with_reviews.map((rev) => {
-    if (rev.user_id === user.id) {
-      console.log(mov.title)
-      console.log(rev.user_id)
-    } else {
-      console.log("This don't match")
-    }
-  }))
+  // const newestArray = movies.map((mov) => mov.movies_with_reviews.map((rev) => {
+  //   if (rev.user_id === user.id) {
+  //     console.log(mov.title)
+  //     console.log(rev.user_id)
+  //   } else {
+  //     console.log("This don't match")
+  //   }
+  // }))
 
   
   // console.log("NEWEST ARRAY", newestArray)  
-
 
   // if review.length = 0, add a review button or something
 
@@ -86,6 +85,9 @@ function UserReviewsList({user, movies, setMovies}) {
             <cite><b>Director:</b> {mov.director}</cite><br></br><br></br>
           </p>
           <p><em><b>My review:</b></em> {rev.review_content}</p>
+          {/* How do I get my handle delete function to here? */}
+          <button>Delete</button>
+          <button>Edit</button>
         </Box>
         </Movie>
       )
@@ -93,10 +95,10 @@ function UserReviewsList({user, movies, setMovies}) {
       console.log("This don't match")
     }
   }))}
-      <Box>
+      {/* <Box>
         <h1>Hey</h1>
-      </Box>
-        {userReviews.map((review) => (
+      </Box> */}
+        {/* {userReviews.map((review) => (
           <Movie key={review.id}>
             <Box>
                 <img className="poster" alt={review.movie.title}src={review.movie.image_url}/>
@@ -111,11 +113,9 @@ function UserReviewsList({user, movies, setMovies}) {
               <Box>
                 <h1>My Review:</h1>
                 <p>{review.review_content}</p>
-                {/* Anonymous function pointing to onDeleteClick */}
-                {/* <DeleteReview></DeleteReview> */}
-
+            
                 <button onClick={() => handleDeleteReview(review.id)}>Delete Review</button><br></br><br></br>
-                {/* Form that appears when you click on edit review */}
+                
                 <form onSubmit={() => handleEdit(review.id)}>
                   <div>
                     <label htmlFor="review">Review</label>
@@ -137,7 +137,7 @@ function UserReviewsList({user, movies, setMovies}) {
             </Box>  
           </Movie>
         ))
-      }
+      } */}
     </Wrapper>
   );
 }
