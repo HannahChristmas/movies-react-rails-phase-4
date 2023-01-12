@@ -34,6 +34,8 @@ function MovieCard( {user, movies, setMovies } ) {
             }
         })
         setMovies(newMovies)
+         // This works:
+            // console.log("AFTER ADD REVIEW:", newMovies)
 
         // setMovies() map through original movies array. find the movie we are talking about. if this is the movie that needs to be changed, put in the found movie. 
     }
@@ -59,6 +61,8 @@ function MovieCard( {user, movies, setMovies } ) {
                 }
             })
             setMovies(newMovies)
+            // This works:
+            // console.log("AFTER DELETE REVIEW:", newMovies)
           }
         })
       }
@@ -105,7 +109,7 @@ function MovieCard( {user, movies, setMovies } ) {
                             <DeleteReview handleDelete={handleDelete} review={review.review_id}></DeleteReview>
                             {/* <button onClick={() => handleDelete(review.review_id)}>Delete</button>     */}
                             {/* <button>Edit</button>     */}
-                            </>
+                        </>
                             : null
                     }
                     </Box>

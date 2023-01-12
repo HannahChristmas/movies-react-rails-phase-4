@@ -1,75 +1,47 @@
-import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Box } from "../styles";
-// import AllMoviesList from "./AllMoviesList";
-// import { useParams } from "react-router";
 
 
 function UserReviewsList({user, movies, setMovies}) {
 
-  const [userReviews, setUserReviews] = useState([]);
-  const [reviewContent, setReviewContent] = useState("");
-  const [errors, setErrors] = useState([]);
-  // const { id } = useParams();    
-  // const individualReview = user.reviews.find(rev => rev.id === id)
-
-  // useEffect(() => {
-  //   fetch("/reviews")
-  //   .then(r => r.json())
-  //   .then(userReviews => setUserReviews(userReviews))
-  // }, [])
-
-
-  // Instead of a fetch to reviews, find movies with username. go through the movies and look at reviews for each. pull them out.  
-
-  const handleDeleteReview = (id) => {
-    fetch(`/reviews/${id}`, {
+  const handleDeleteReview = (e) => {
+    console.log(movies)
+    fetch(`/reviews/${e.target.name}`, {
       method: 'DELETE'
     })
     .then(r => {
       if (r.ok) {
-        const filteredReview = userReviews.filter(review => review.id !== id)
-        setUserReviews(filteredReview)
-        console.log("FROM INSIDE OF USER REVIEW LIST AFTER DELETE IS CLICKED: These will be only the reviews that are left.", filteredReview)
+        const clickedReview = e.target.name
+
+        const foundMovie = movies.find((mov) => {
+          const reviewsArray = mov.movies_with_reviews
+          const foundReview = reviewsArray.find((rev) => rev.review_id === parseInt(clickedReview))
+           if(foundReview){
+            return foundReview
+           } else {
+            return false
+           }
+        })
+        const filteredReview = foundMovie.movies_with_reviews.filter((review) => {
+          return review.review_id !== parseInt(clickedReview)
+        })
+        foundMovie.movies_with_reviews = filteredReview
+        console.log("FILTERED REVIEW:", filteredReview)
+        const newMovies = movies.map(mov => {
+          if (foundMovie.id === mov.id){
+            return foundMovie
+          } else {
+            return mov
+          }
+        })
+        setMovies(newMovies)
       }
     })
   }
 
-  const handleEdit = (e) => {
-    e.preventDefault();
-    console.log("Doesn't work")
-    // const newReview = {review_content: reviewContent}
-    // fetch(`/myreviews/${id}`, {
-    //   method: 'PATCH',
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   }, 
-    //   body: JSON.stringify(newReview)
-    // })
-    // .then(r => {
-    //   if (r.ok) {
-    //     const filteredReview = userReviews.map(review => review.id === newReview.id ? newReview : review )
-    //     setUserReviews(filteredReview)
-    //   }
-    // })
-  }
-
-  // const newestArray = movies.map((mov) => mov.movies_with_reviews.map((rev) => {
-  //   if (rev.user_id === user.id) {
-  //     console.log(mov.title)
-  //     console.log(rev.user_id)
-  //   } else {
-  //     console.log("This don't match")
-  //   }
-  // }))
-
-  
-  // console.log("NEWEST ARRAY", newestArray)  
-
-  // if review.length = 0, add a review button or something
-
   return (
     <Wrapper>
+      
       {movies.map((mov) => mov.movies_with_reviews.map((rev) => {
     if (rev.user_id === user.id) {
       return (
@@ -86,7 +58,7 @@ function UserReviewsList({user, movies, setMovies}) {
           </p>
           <p><em><b>My review:</b></em> {rev.review_content}</p>
           {/* How do I get my handle delete function to here? */}
-          <button>Delete</button>
+          <button name={rev.review_id} onClick={(e) => handleDeleteReview(e)}>Delete</button>
           <button>Edit</button>
         </Box>
         </Movie>
@@ -95,49 +67,7 @@ function UserReviewsList({user, movies, setMovies}) {
       console.log("This don't match")
     }
   }))}
-      {/* <Box>
-        <h1>Hey</h1>
-      </Box> */}
-        {/* {userReviews.map((review) => (
-          <Movie key={review.id}>
-            <Box>
-                <img className="poster" alt={review.movie.title}src={review.movie.image_url}/>
-              <h2>{review.movie.title}</h2>
-              <p>
-                <em><b>Genre:</b> {review.movie.genre}</em>
-                &nbsp;·&nbsp;
-                <cite><b>Year:</b> {review.movie.year}</cite>
-                &nbsp;·&nbsp;
-                <cite><b>Director:</b> {review.movie.director}</cite><br></br><br></br>
-              </p>
-              <Box>
-                <h1>My Review:</h1>
-                <p>{review.review_content}</p>
-            
-                <button onClick={() => handleDeleteReview(review.id)}>Delete Review</button><br></br><br></br>
-                
-                <form onSubmit={() => handleEdit(review.id)}>
-                  <div>
-                    <label htmlFor="review">Review</label>
-                    <input
-                      type="text"
-                      id="review"
-                      value={reviewContent}
-                      onChange={(e) => setReviewContent(e.target.value)}
-                    />
-                  </div>
-                  {errors?.map((err) => (
-                    <p key={err} style={{ color: "red" }}>
-                      {err}
-                    </p>
-                  ))}
-                  <button type="submit">Submit</button>
-                </form>
-              </Box>
-            </Box>  
-          </Movie>
-        ))
-      } */}
+  
     </Wrapper>
   );
 }
