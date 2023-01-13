@@ -40,7 +40,6 @@ function MovieCard( {user, movies, setMovies } ) {
     }
 
     function handleDelete(id) {
-        console.log(movies)
         fetch(`/reviews/${id}`, {
           method: 'DELETE'
         })
@@ -65,10 +64,7 @@ function MovieCard( {user, movies, setMovies } ) {
       }
 
       function handleUpdateReview(id) {
-        console.log("Suppy")
         const addReview = {review_content: newReview}
-        //find 
-        // const individualReviewId = foundMovie.movie_with_reviews.find(rev => rev.review_id === )
         fetch(`/reviews/${id}`, {
             method: "PATCH",
             headers: {

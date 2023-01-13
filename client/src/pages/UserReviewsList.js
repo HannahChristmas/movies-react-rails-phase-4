@@ -1,10 +1,14 @@
 import styled from "styled-components";
-import { Box } from "../styles";
+import { Box, Button, Input, Label } from "../styles";
+import { useState } from "react"
 
 function UserReviewsList({user, movies, setMovies}) {
 
+  const [newReview, setNewReview] = useState("")
+  const [toggleNewReview, setToggleNewReview] = useState(false)
+
+
   const handleDeleteReview = (e) => {
-    console.log(movies)
     fetch(`/reviews/${e.target.name}`, {
       method: 'DELETE'
     })
@@ -38,6 +42,44 @@ function UserReviewsList({user, movies, setMovies}) {
     })
   }
 
+  function handleUpdateReview(e) {
+    e.preventDefault()
+    const addReview = {review_content: newReview}
+    fetch(`/reviews/${e.target.name}`, {
+      method: "PATCH", 
+      headers: {
+        "Content-Type" : "application/json"
+      }, 
+      body: JSON.stringify(addReview)
+    })
+     .then(r => {
+      if (r.ok) {
+        const clickedReview = e.target.name
+
+        const foundMovie = movies.find((mov) => {
+          const reviewsArray = mov.movies_with_reviews
+          const foundReview = reviewsArray.find((rev) => rev.review_id === parseInt(clickedReview))
+           if(foundReview){
+            return foundReview
+           } else {
+            return false
+           }
+        })
+        const updatedReview = foundMovie.movies_with_reviews.map((review) => review.id === newReview.id ? newReview : review)
+        foundMovie.movies_with_reviews = updatedReview
+        // console.log("FILTERED REVIEW:", filteredReview)
+        const newMovies = movies.map(mov => {
+          if (foundMovie.id === mov.id){
+            return foundMovie
+          } else {
+            return mov
+          }
+        })
+        setMovies(newMovies)
+      }
+     })
+  }
+
   return (
     <Wrapper>
       {movies.map((mov) => mov.movies_with_reviews.map((rev) => {
@@ -55,9 +97,25 @@ function UserReviewsList({user, movies, setMovies}) {
             <cite><b>Director:</b> {mov.director}</cite><br></br><br></br>
           </p>
           <p><em><b>My review:</b></em> {rev.review_content}</p>
-          {/* How do I get my handle delete function to here? */}
           <button name={rev.review_id} onClick={(e) => handleDeleteReview(e)}>Delete</button>
-          <button>Edit</button>
+          {/* Here I am never passing e back up to handleEditReview */}
+          <button name={rev.review_id} onClick={() => setToggleNewReview(toggle => !toggle)}>Edit</button>
+          {toggleNewReview ? 
+                            <form>
+                            <Label htmlFor="title">Review</Label>
+                            <Input
+                              type="text"
+                              id="review"
+                            //   defaultValue={movie.review_content}
+                              value={rev.review_content}
+                              onChange={(e) => setNewReview(e.target.value)}
+                            />
+                                <Button onClick={() => handleUpdateReview(rev.review_id)} color="primary" type="submit">
+                                 Submit Review
+                                </Button>
+                            </form>
+                              : null
+                        }  
         </Box>
         </Movie>
       )
