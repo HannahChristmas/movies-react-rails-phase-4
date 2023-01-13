@@ -1,24 +1,27 @@
 import styled from "styled-components";
 import { Box, Button, Input, Label } from "../styles";
 import { useState } from "react"
+import { useParams } from "react-router";
+
 
 function UserReviewsList({user, movies, setMovies}) {
-
+ 
+  const { id } = useParams();   
   const [newReview, setNewReview] = useState("")
   const [toggleNewReview, setToggleNewReview] = useState(false)
 
 
-  const handleDeleteReview = (e) => {
-    fetch(`/reviews/${e.target.name}`, {
+  const handleDeleteReview = (id) => {
+    fetch(`/reviews/${id}`, {
       method: 'DELETE'
     })
     .then(r => {
       if (r.ok) {
-        const clickedReview = e.target.name
+        // const clickedReview = e.target.name
 
         const foundMovie = movies.find((mov) => {
           const reviewsArray = mov.movies_with_reviews
-          const foundReview = reviewsArray.find((rev) => rev.review_id === parseInt(clickedReview))
+          const foundReview = reviewsArray.find((rev) => rev.review_id === parseInt(id))
            if(foundReview){
             return foundReview
            } else {
@@ -26,7 +29,7 @@ function UserReviewsList({user, movies, setMovies}) {
            }
         })
         const filteredReview = foundMovie.movies_with_reviews.filter((review) => {
-          return review.review_id !== parseInt(clickedReview)
+          return review.review_id !== parseInt(id)
         })
         foundMovie.movies_with_reviews = filteredReview
         // console.log("FILTERED REVIEW:", filteredReview)
@@ -97,7 +100,7 @@ function UserReviewsList({user, movies, setMovies}) {
             <cite><b>Director:</b> {mov.director}</cite><br></br><br></br>
           </p>
           <p><em><b>My review:</b></em> {rev.review_content}</p>
-          <button name={rev.review_id} onClick={(e) => handleDeleteReview(e)}>Delete</button>
+          <button onClick={() => handleDeleteReview(rev.review_id)}>Delete</button>
           {/* Here I am never passing e back up to handleEditReview */}
           <button name={rev.review_id} onClick={() => setToggleNewReview(toggle => !toggle)}>Edit</button>
           {toggleNewReview ? 
