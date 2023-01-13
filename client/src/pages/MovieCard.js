@@ -75,12 +75,30 @@ function MovieCard( {user, movies, setMovies } ) {
         })  
         .then(r => r.json())
         .then(console.log("ADDREVIEW", addReview))
-        .then(newReview => {
-          const updatedReview = foundMovie.movies_with_reviews.map(review => review.id === newReview.id ? newReview : review)
-          foundMovie.movies_with_reviews = updatedReview 
+        .then(data => {
+            const individualReview ={
+                review_id: data.id, 
+                review_content: data.review_content,
+                username: data.user.username,
+                user_id: data.user_id
+            }
+            console.log("updated data from MovieCard:", data)
+
+          const updatedReviews = foundMovie.movies_with_reviews.map(review => review.review_id === individualReview.review_id ? individualReview : review)
+          foundMovie.movies_with_reviews = updatedReviews 
+          console.log("updated reviews from MovieCard:", updatedReviews)
+
           setMovie({...foundMovie})
-          // setMovies
+          const newMovies = movies.map(mov => {
+            if ( foundMovie.id === mov.id ){
+                return foundMovie
+            } else {
+                return mov
+            }
         })
+        setMovies(newMovies)    
+        console.log(newMovies)    
+    })
         // alert("BUTTS BUTTS BUTTS BUTTS")
     }
 
