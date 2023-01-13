@@ -57,41 +57,41 @@ function UserReviewsList({user, movies, setMovies}) {
     // console.log(id)
     // console.log(event)
     const addReview = {review_content: newReview}
-    // fetch(`/reviews/${id}`, {
-    //   method: "PATCH", 
-    //   headers: {
-    //     "Content-Type" : "application/json"
-    //   }, 
-    //   body: JSON.stringify(addReview)
-    // })
-    //  .then(r => {
-    //   if (r.ok) {
-    //     // const clickedReview = e.target.name
+    fetch(`/reviews/${id}`, {
+      method: "PATCH", 
+      headers: {
+        "Content-Type" : "application/json"
+      }, 
+      body: JSON.stringify(addReview)
+    })
+     .then(r => {
+      if (r.ok) {
+        // const clickedReview = e.target.name
 
-    //     const foundMovie = movies.find((mov) => {
-    //       const reviewsArray = mov.movies_with_reviews
-    //       const foundReview = reviewsArray.find((rev) => rev.review_id === parseInt(id))
-    //        if(foundReview){
-    //         console.log("foundReview:", foundReview)
+        const foundMovie = movies.find((mov) => {
+          const reviewsArray = mov.movies_with_reviews
+          const foundReview = reviewsArray.find((rev) => rev.review_id === parseInt(id))
+           if(foundReview){
+            console.log("foundReview:", foundReview)
 
-    //         return foundReview
-    //        } else {
-    //         return false
-    //        }
-    //     })
-    //     const updatedReview = foundMovie.movies_with_reviews.map((review) => review.id === newReview.id ? newReview : review)
-    //     foundMovie.movies_with_reviews = updatedReview
-    //     // console.log("FILTERED REVIEW:", filteredReview)
-    //     const newMovies = movies.map(mov => {
-    //       if (foundMovie.id === mov.id){
-    //         return foundMovie
-    //       } else {
-    //         return mov
-    //       }
-    //     })
-    //     setMovies(newMovies)
-    //   }
-    //  })
+            return foundReview
+           } else {
+            return false
+           }
+        })
+        const updatedReview = foundMovie.movies_with_reviews.map((review) => review.id === newReview.id ? newReview : review)
+        foundMovie.movies_with_reviews = updatedReview
+        // console.log("FILTERED REVIEW:", filteredReview)
+        const newMovies = movies.map(mov => {
+          if (foundMovie.id === mov.id){
+            return foundMovie
+          } else {
+            return mov
+          }
+        })
+        setMovies(newMovies)
+      }
+     })
   }
 
   return (
