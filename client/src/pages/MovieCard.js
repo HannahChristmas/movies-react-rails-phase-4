@@ -15,7 +15,7 @@ function MovieCard( {user, movies, setMovies } ) {
 
     const [status, setStatus] = useState("pending")
     const foundMovie = movies.find(mov => mov.id === parseInt(id))
-    console.log(foundMovie)
+    console.log("foundMovie from MovieCard.js:", foundMovie)
     
     useEffect(() => {
         if (foundMovie) {
@@ -63,7 +63,8 @@ function MovieCard( {user, movies, setMovies } ) {
         })
       }
 
-      function handleUpdateReview(id) {
+      function handleUpdateReview(e, id) {
+        e.preventDefault()
         const addReview = {review_content: newReview}
         fetch(`/reviews/${id}`, {
             method: "PATCH",
@@ -78,6 +79,7 @@ function MovieCard( {user, movies, setMovies } ) {
           const updatedReview = foundMovie.movies_with_reviews.map(review => review.id === newReview.id ? newReview : review)
           foundMovie.movies_with_reviews = updatedReview 
           setMovie({...foundMovie})
+          // setMovies
         })
         // alert("BUTTS BUTTS BUTTS BUTTS")
     }
@@ -134,7 +136,7 @@ function MovieCard( {user, movies, setMovies } ) {
                               value={movie.review_content}
                               onChange={(e) => setNewReview(e.target.value)}
                             />
-                                <Button onClick={() => handleUpdateReview(review.review_id)} color="primary" type="submit">
+                                <Button onClick={(e) => handleUpdateReview(e, review.review_id)} color="primary" type="submit">
                                  Submit Review
                                 </Button>
                             {/* </Box> */}

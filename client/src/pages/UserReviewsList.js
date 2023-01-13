@@ -52,10 +52,8 @@ function UserReviewsList({user, movies, setMovies}) {
     })
   }
 
-  const handleUpdateReview = (id) => {
-    // event.preventDefault()
-    // console.log(id)
-    // console.log(event)
+  const handleUpdateReview = (e, id) => {
+    e.preventDefault()
     const addReview = {review_content: newReview}
     fetch(`/reviews/${id}`, {
       method: "PATCH", 
@@ -66,21 +64,28 @@ function UserReviewsList({user, movies, setMovies}) {
     })
      .then(r => {
       if (r.ok) {
-        // const clickedReview = e.target.name
+      r.json().then(data => {
+        const individualReview = {
+          review_id: data.id,
+          review_content: data.review_content,
+          username: data.user.username,
+          user_id: data.user_id
+        }
 
         const foundMovie = movies.find((mov) => {
           const reviewsArray = mov.movies_with_reviews
           const foundReview = reviewsArray.find((rev) => rev.review_id === parseInt(id))
            if(foundReview){
             console.log("foundReview:", foundReview)
-
-            return foundReview
+            return true
            } else {
             return false
            }
         })
-        const updatedReview = foundMovie.movies_with_reviews.map((review) => review.id === newReview.id ? newReview : review)
-        foundMovie.movies_with_reviews = updatedReview
+        const updatedReviews = foundMovie.movies_with_reviews.map((review) => review.review_id === individualReview.review_id ? individualReview : review)
+        console.log("DATA", data)
+        console.log("updated reviews:", updatedReviews)
+        foundMovie.movies_with_reviews = updatedReviews
         // console.log("FILTERED REVIEW:", filteredReview)
         const newMovies = movies.map(mov => {
           if (foundMovie.id === mov.id){
@@ -90,6 +95,10 @@ function UserReviewsList({user, movies, setMovies}) {
           }
         })
         setMovies(newMovies)
+
+      })
+
+        
       }
      })
   }
@@ -99,7 +108,7 @@ function UserReviewsList({user, movies, setMovies}) {
       {movies.map((mov) => mov.movies_with_reviews.map((rev) => {
     if (rev.user_id === user.id) {
       return (
-        <Movie key={rev.id}>
+        <Movie key={mov.id}>
         <Box>
           <img className="poster" alt={mov.title} src={mov.image_url}></img>
           <h1>{mov.title}</h1>
@@ -120,10 +129,10 @@ function UserReviewsList({user, movies, setMovies}) {
                               type="text"
                               id="review"
                             //   defaultValue={movie.review_content}
-                              value={rev.review_content}
+                              // value={rev.review_content}
                               onChange={(e) => setNewReview(e.target.value)}
                             />
-                                <Button onClick={(e) => handleUpdateReview(rev.review_id)} color="primary" type="submit">
+                                <Button onClick={(e) => handleUpdateReview(e, rev.review_id)} color="primary" type="submit">
                                  Submit Review
                                 </Button>
                             </form>
