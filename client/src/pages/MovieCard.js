@@ -4,11 +4,15 @@ import { useParams } from "react-router";
 import styled from "styled-components";
 import { Box } from "../styles";
 import NewReview from './NewReview.js'
-import DeleteReview from './DeleteReview.js'
+import { Button, Input, Label } from "../styles";
+
 
 function MovieCard( {user, movies, setMovies } ) {
     const { id } = useParams();   
     const [movie, setMovie] = useState({});
+    const [newReview, setNewReview] = useState("")
+    const [toggleNewReview, setToggleNewReview] = useState(false)
+
     const [status, setStatus] = useState("pending")
     const foundMovie = movies.find(mov => mov.id === parseInt(id))
     console.log(foundMovie)
@@ -20,11 +24,10 @@ function MovieCard( {user, movies, setMovies } ) {
         } else {
             setStatus("rejected")
         }
-    }, [id, movies])
+    }, [id, movies, foundMovie])
 
     function handleAddReview(updatedReviews) {
         foundMovie.movies_with_reviews = updatedReviews
-        // updatedReviews is the entire reviews array
         setMovie({...foundMovie})
         const newMovies = movies.map(mov => {
             if (foundMovie.id === mov.id){
@@ -34,13 +37,9 @@ function MovieCard( {user, movies, setMovies } ) {
             }
         })
         setMovies(newMovies)
-         // This works:
-            // console.log("AFTER ADD REVIEW:", newMovies)
-
-        // setMovies() map through original movies array. find the movie we are talking about. if this is the movie that needs to be changed, put in the found movie. 
     }
 
-    const handleDelete = (id) => {
+    function handleDelete(id) {
         console.log(movies)
         fetch(`/reviews/${id}`, {
           method: 'DELETE'
@@ -61,11 +60,33 @@ function MovieCard( {user, movies, setMovies } ) {
                 }
             })
             setMovies(newMovies)
-            // This works:
-            // console.log("AFTER DELETE REVIEW:", newMovies)
           }
         })
       }
+
+      function handleUpdateReview(id) {
+        console.log("Suppy")
+        const addReview = {review_content: newReview}
+        //find 
+        // const individualReviewId = foundMovie.movie_with_reviews.find(rev => rev.review_id === )
+        fetch(`/reviews/${id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type" : "application/json"
+            },
+            body: JSON.stringify(addReview)
+        })  
+        .then(r => r.json())
+        .then(console.log("ADDREVIEW", addReview))
+        .then(newReview => {
+          const updatedReview = foundMovie.movies_with_reviews.map(review => review.id === newReview.id ? newReview : review)
+          foundMovie.movies_with_reviews = updatedReview 
+          setMovie({...foundMovie})
+        })
+        // alert("BUTTS BUTTS BUTTS BUTTS")
+    }
+
+    
 
     if (status === "pending") return <h2>Loading...</h2>;
     // Don't want another fetch request just for errors. 
@@ -90,10 +111,7 @@ function MovieCard( {user, movies, setMovies } ) {
                 <h1>{movie.year}</h1>
             </Box>
             <Box>
-
-                {/* if foundMovie.movies_with_reviews.user.id */}
                 {hasUserReviewedThis(foundMovie)
-                // put edit review card instead of null 
                     ? null 
                     :
                     <NewReview handleAddReview={handleAddReview} movieId={movie.id} userId={user.id}></NewReview>
@@ -106,9 +124,27 @@ function MovieCard( {user, movies, setMovies } ) {
                         {review.user_id === user.id ?
                         <>
                         {/* Instead of this being a button, make it a JSX to a button  */}
-                            <DeleteReview handleDelete={handleDelete} review={review.review_id}></DeleteReview>
-                            {/* <button onClick={() => handleDelete(review.review_id)}>Delete</button>     */}
-                            {/* <button>Edit</button>     */}
+                            {/* <DeleteReview handleDelete={handleDelete} review={review.review_id}></DeleteReview> */}
+                            <button onClick={() => handleDelete(review.review_id)}>Delete</button>     
+                            <button onClick={() => setToggleNewReview(toggle => !toggle)}>Edit your Review</button>
+                            {toggleNewReview ? 
+                            <form>
+                            {/* <Box> */}
+                            <Label htmlFor="title">Review</Label>
+                            <Input
+                              type="text"
+                              id="review"
+                            //   defaultValue={movie.review_content}
+                              value={movie.review_content}
+                              onChange={(e) => setNewReview(e.target.value)}
+                            />
+                                <Button onClick={() => handleUpdateReview(review.review_id)} color="primary" type="submit">
+                                 Submit Review
+                                </Button>
+                            {/* </Box> */}
+                            </form>
+                              : null
+                        }    
                         </>
                             : null
                     }

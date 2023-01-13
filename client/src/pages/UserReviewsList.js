@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { Box } from "../styles";
 
-
 function UserReviewsList({user, movies, setMovies}) {
 
   const handleDeleteReview = (e) => {
@@ -26,7 +25,7 @@ function UserReviewsList({user, movies, setMovies}) {
           return review.review_id !== parseInt(clickedReview)
         })
         foundMovie.movies_with_reviews = filteredReview
-        console.log("FILTERED REVIEW:", filteredReview)
+        // console.log("FILTERED REVIEW:", filteredReview)
         const newMovies = movies.map(mov => {
           if (foundMovie.id === mov.id){
             return foundMovie
@@ -41,7 +40,6 @@ function UserReviewsList({user, movies, setMovies}) {
 
   return (
     <Wrapper>
-      
       {movies.map((mov) => mov.movies_with_reviews.map((rev) => {
     if (rev.user_id === user.id) {
       return (

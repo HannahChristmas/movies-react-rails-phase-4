@@ -7,17 +7,12 @@ import AllMoviesList from '../pages/AllMoviesList.js'
 import MovieCard from '../pages/MovieCard.js'
 import UserReviewsList from "../pages/UserReviewsList";
 import NewMovie from "../pages/NewMovie";
-// import { useParams } from "react-router";
 
 function App() {
   const [user, setUser] = useState(null);
   const [movies, setMovies] = useState([]);
-  // const { id } = useParams();   
 
   console.log("MOVIES FROM APP", movies)
-
-  // const foundMovie = movies.find(mov => mov.id === parseInt(id))
-  // console.log("FROM APP:", foundMovie)
 
   useEffect(() => {
       fetch("/movies")
