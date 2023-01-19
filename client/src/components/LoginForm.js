@@ -52,7 +52,6 @@ function LoginForm ( { onLogin } ) {
                 {errors.map((err) => (
                     <p key={err}>{err}</p>
                 ))}
-                <p>this sucks</p>
             </label>
 
         </form>
