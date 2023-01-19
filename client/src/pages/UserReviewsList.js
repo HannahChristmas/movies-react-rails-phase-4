@@ -83,8 +83,8 @@ function UserReviewsList({user, movies, setMovies}) {
            }
         })
         const updatedReviews = foundMovie.movies_with_reviews.map((review) => review.review_id === individualReview.review_id ? individualReview : review)
-        console.log("DATA", data)
-        console.log("updated reviews:", updatedReviews)
+        // console.log("DATA", data)
+        // console.log("updated reviews:", updatedReviews)
         foundMovie.movies_with_reviews = updatedReviews
         // console.log("FILTERED REVIEW:", filteredReview)
         const newMovies = movies.map(mov => {
@@ -94,12 +94,14 @@ function UserReviewsList({user, movies, setMovies}) {
             return mov
           }
         })
+        
         setMovies(newMovies)
+        setMovieBeingEdited(null)
 
       })
-
-        
+      
       }
+      
      })
   }
 

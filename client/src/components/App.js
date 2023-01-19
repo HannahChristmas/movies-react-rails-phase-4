@@ -12,16 +12,11 @@ function App() {
   const [user, setUser] = useState(null);
   const [movies, setMovies] = useState([]);
 
-  console.log("MOVIES FROM APP", movies)
-
   useEffect(() => {
       fetch("/movies")
       .then(r => r.json())
       .then(movies => setMovies(movies))
     }, [])
-
-    console.log("MOVIES AFTER REFRESH", movies)
-
 
   useEffect(() => {
     fetch("/me").then((res) => {

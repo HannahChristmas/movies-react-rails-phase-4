@@ -1,13 +1,54 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Box, Button } from "../styles";
+import { useState } from "react";
 
 function AllMoviesList({movies}){
 
+    const [isAlphaClicked, setIsAlphaClicked] = useState(false)
+    const [isYearClicked, setIsYearClicked] = useState(false)
+
+
+    const sortedMovies = 
+    movies.sort((a, b) => {
+        if (isAlphaClicked){
+        const nameA = a.title.toUpperCase(); 
+        const nameB = b.title.toUpperCase();
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+        return 0;}
+        else {
+            return null
+        }
+    })
+
+    const moviesSortedByYear = 
+    movies.sort((a, b) => {
+        if (isYearClicked){
+        const yearA = a.year; 
+        const yearB = b.year;
+        if (yearA < yearB) {
+          return -1;
+        }
+        if (yearA > yearB) {
+          return 1;
+        }
+        return 0;}
+        else {
+            return null
+        }
+    })
     return (
         <Wrapper>
-            {movies.length > 0 ? (
-                movies.map((movie) => (
+            <button onClick={() => setIsAlphaClicked(!isAlphaClicked)}>Sort Alphabetically</button><br></br><br></br>
+            <button onClick={() => setIsYearClicked(!isYearClicked)}>Sort By Year</button><br></br><br></br>
+
+            {sortedMovies.length > 0 ? (
+                sortedMovies.map((movie) => (
                     <Movie key={movie.id}>
                         <Box>
                         <img className="poster" alt={movie.title}src={movie.image_url}/>

@@ -11,7 +11,6 @@ function NewMovie({ user, handleAddMovie }) {
   const [genre, setGenre] = useState("");
   const [year, setYear] = useState("");
   const [director, setDirector] = useState("");
-//   const [review, setReview] = useState([]);
   const [image_url, setImageUrl] = useState("");
   const [errors, setErrors] = useState([]);
   const [isLoading, setIsLoading] = useState(false);

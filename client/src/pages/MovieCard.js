@@ -82,12 +82,8 @@ function MovieCard( {user, movies, setMovies } ) {
                 username: data.user.username,
                 user_id: data.user_id
             }
-            console.log("updated data from MovieCard:", data)
-
           const updatedReviews = foundMovie.movies_with_reviews.map(review => review.review_id === individualReview.review_id ? individualReview : review)
           foundMovie.movies_with_reviews = updatedReviews 
-          console.log("updated reviews from MovieCard:", updatedReviews)
-
           setMovie({...foundMovie})
           const newMovies = movies.map(mov => {
             if ( foundMovie.id === mov.id ){
@@ -96,13 +92,10 @@ function MovieCard( {user, movies, setMovies } ) {
                 return mov
             }
         })
-        setMovies(newMovies)    
-        console.log(newMovies)    
+        setMovies(newMovies)
+        setToggleNewReview(false)    
     })
-        // alert("BUTTS BUTTS BUTTS BUTTS")
     }
-
-    
 
     if (status === "pending") return <h2>Loading...</h2>;
     // Don't want another fetch request just for errors. 
