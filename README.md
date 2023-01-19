@@ -32,7 +32,7 @@ My blog post about ActiveRecord Associations can be found [here](https://medium.
 
 ## Video Link
 
-My Youtube video about this project can be found [here] (https://www.youtube.com/).
+My Youtube video about this project can be found [here](https://www.youtube.com/).
 
 ## Resources 
 
