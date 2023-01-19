@@ -19,8 +19,7 @@ After creating an account, this application allows users to review movies they h
 - Run npm start --prefix client to start the frontend server
 
 ## Models
-![Models]
-(https://github.com/HannahChristmas/phase-4-final-project/blob/7fc4b56e629037ef32a59a4cb2e6be3f9acaa8b2/Screen%20Shot%202023-01-19%20at%203.09.49%20PM.png)
+![Models](https://github.com/HannahChristmas/phase-4-final-project/blob/7fc4b56e629037ef32a59a4cb2e6be3f9acaa8b2/Screen%20Shot%202023-01-19%20at%203.09.49%20PM.png)
 
 ## Contributing
 
@@ -36,11 +35,11 @@ My Youtube video about this project can be found [here](https://www.youtube.com/
 
 ## Resources 
 
-- [IMDB] (www.imdb.com)
+- [IMDB](www.imdb.com)
 
 ## License 
 
-- [MIT] (https://choosealicense.com/licenses/mit/)
+- [MIT](https://choosealicense.com/licenses/mit/)
 
 
 
