@@ -1,10 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
-// import ReactMarkdown from "react-markdown";
 import { Button, Error, FormField, Input, Label } from "../styles";
-
-// import { Button, Error, FormField, Input, Label, Textarea } from "../styles";
 
 function NewMovie({ user, handleAddMovie }) {
   const [title, setTitle] = useState("A New Movie");
@@ -31,7 +28,6 @@ function NewMovie({ user, handleAddMovie }) {
         genre,
         year, 
         director,
-        // review_content: review,
         image_url
       }),
     }).then((r) => {
@@ -90,15 +86,7 @@ function NewMovie({ user, handleAddMovie }) {
               onChange={(e) => setDirector(e.target.value)}
             />
           </FormField>
-          {/* <FormField>
-            <Label htmlFor="review">Review</Label>
-            <Input
-              type="text"
-              id="review"
-              value={review}
-              onChange={(e) => setReview(e.target.value)}
-            />
-          </FormField> */}
+
           <FormField>
             <Label htmlFor="image_url">Movie Poster URL</Label>
             <Input
@@ -125,22 +113,14 @@ function NewMovie({ user, handleAddMovie }) {
         <h1>{title}</h1>
         <p>
           <em><b>Genre:</b> {genre} </em>
-          {/* &nbsp;·&nbsp; */}
         </p>
         <p>
           <em><b>Year:</b> {year} </em>
-          {/* &nbsp;·&nbsp; */}
         </p>
         <p>
           <em><b>Director:</b> {director} </em>
-          {/* &nbsp;·&nbsp; */}
         </p>
-        {/* <p>
-          <em><b>Review:</b> {review} </em>
-        </p> */}
-        {/* <ReactMarkdown>{instructions}</ReactMarkdown> */}
         <cite>By {user.username}</cite>
-
       </WrapperChild>
     </Wrapper>
   );

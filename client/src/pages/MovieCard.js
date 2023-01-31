@@ -6,7 +6,6 @@ import { Box } from "../styles";
 import NewReview from './NewReview.js'
 import { Button, Input, Label } from "../styles";
 
-
 function MovieCard( {user, movies, setMovies } ) {
     const { id } = useParams();   
     const [movie, setMovie] = useState({});
@@ -49,7 +48,6 @@ function MovieCard( {user, movies, setMovies } ) {
                 return review.review_id !== id
             })
             foundMovie.movies_with_reviews = filteredReview 
-        // we wrap it in the curly braces to make a new object. If we don't wrap it, we only get the keys. 
             setMovie({...foundMovie})
             const newMovies = movies.map(mov => {
                 if ( foundMovie.id === mov.id ){
@@ -98,7 +96,6 @@ function MovieCard( {user, movies, setMovies } ) {
     }
 
     if (status === "pending") return <h2>Loading...</h2>;
-    // Don't want another fetch request just for errors. 
     if (status === "rejected") return <h2>Error: Movie doesn't exist</h2>;
 
     function hasUserReviewedThis(param1) {
@@ -132,25 +129,20 @@ function MovieCard( {user, movies, setMovies } ) {
                         by: <em>{review.username}</em><br></br>
                         {review.user_id === user.id ?
                         <>
-                        {/* Instead of this being a button, make it a JSX to a button  */}
-                            {/* <DeleteReview handleDelete={handleDelete} review={review.review_id}></DeleteReview> */}
                             <button onClick={() => handleDelete(review.review_id)}>Delete</button>     
                             <button onClick={() => setToggleNewReview(toggle => !toggle)}>Edit your Review</button>
                             {toggleNewReview ? 
                             <form>
-                            {/* <Box> */}
                             <Label htmlFor="title">Review</Label>
                             <Input
                               type="text"
                               id="review"
-                            //   defaultValue={movie.review_content}
                               value={movie.review_content}
                               onChange={(e) => setNewReview(e.target.value)}
                             />
                                 <Button onClick={(e) => handleUpdateReview(e, review.review_id)} color="primary" type="submit">
                                  Submit Review
                                 </Button>
-                            {/* </Box> */}
                             </form>
                               : null
                         }    

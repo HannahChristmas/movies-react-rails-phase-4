@@ -1,19 +1,15 @@
 import styled from "styled-components";
 import { Box, Button, Input, Label } from "../styles";
 import { useState } from "react"
-// import { useParams } from "react-router";
-
 
 function UserReviewsList({user, movies, setMovies}) {
-  // let currentMovie = movies[0]
-  // const { id } = useParams();   
   const [newReview, setNewReview] = useState("")
   const [movieBeingEdited, setMovieBeingEdited] = useState(null)
  
   const toggleReview = (id) => {
-    if(id === movieBeingEdited) { // this means movie is open and we want to unset
+    if(id === movieBeingEdited) { 
       setMovieBeingEdited(null)
-    } else { // open edit s
+    } else { 
       setMovieBeingEdited(id)
     }
   }
@@ -24,8 +20,6 @@ function UserReviewsList({user, movies, setMovies}) {
     })
     .then(r => {
       if (r.ok) {
-        // const clickedReview = e.target.name
-
         const foundMovie = movies.find((mov) => {
           const reviewsArray = mov.movies_with_reviews
           const foundReview = reviewsArray.find((rev) => rev.review_id === parseInt(id))
@@ -39,7 +33,6 @@ function UserReviewsList({user, movies, setMovies}) {
           return review.review_id !== parseInt(id)
         })
         foundMovie.movies_with_reviews = filteredReview
-        // console.log("FILTERED REVIEW:", filteredReview)
         const newMovies = movies.map(mov => {
           if (foundMovie.id === mov.id){
             return foundMovie
@@ -76,17 +69,13 @@ function UserReviewsList({user, movies, setMovies}) {
           const reviewsArray = mov.movies_with_reviews
           const foundReview = reviewsArray.find((rev) => rev.review_id === parseInt(id))
            if(foundReview){
-            console.log("foundReview:", foundReview)
             return true
            } else {
             return false
            }
         })
         const updatedReviews = foundMovie.movies_with_reviews.map((review) => review.review_id === individualReview.review_id ? individualReview : review)
-        // console.log("DATA", data)
-        // console.log("updated reviews:", updatedReviews)
         foundMovie.movies_with_reviews = updatedReviews
-        // console.log("FILTERED REVIEW:", filteredReview)
         const newMovies = movies.map(mov => {
           if (foundMovie.id === mov.id){
             return foundMovie
@@ -130,8 +119,6 @@ function UserReviewsList({user, movies, setMovies}) {
                             <Input
                               type="text"
                               id="review"
-                            //   defaultValue={movie.review_content}
-                              // value={rev.review_content}
                               onChange={(e) => setNewReview(e.target.value)}
                             />
                                 <Button onClick={(e) => handleUpdateReview(e, rev.review_id)} color="primary" type="submit">
@@ -143,8 +130,6 @@ function UserReviewsList({user, movies, setMovies}) {
         </Box>
         </Movie>
       )
-    } else {
-      console.log("This don't match")
     }
   }))}
   
@@ -161,9 +146,5 @@ const Wrapper = styled.section`
 const Movie = styled.article`
   margin-bottom: 24px;
 `;
-
-// const SmallPencil = styled(Pencil)`
-//   height: 2.5rem;
-// `
 
 export default UserReviewsList;
