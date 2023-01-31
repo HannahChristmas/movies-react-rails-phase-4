@@ -10,7 +10,7 @@ After creating an account, this application allows users to review movies they h
 
 ## Setup
 
-- Fork and lcone this repository
+- Fork and clone this repository
 - Run bundle install
 - Run rails db:migrate
 - Run rails db:seed
