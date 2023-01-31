@@ -7,6 +7,8 @@ import AllMoviesList from '../pages/AllMoviesList.js'
 import MovieCard from '../pages/MovieCard.js'
 import UserReviewsList from "../pages/UserReviewsList";
 import NewMovie from "../pages/NewMovie";
+import MyMoviesList from "../pages/MyMoviesList";
+
 
 function App() {
   const [user, setUser] = useState(null);
@@ -42,6 +44,7 @@ function App() {
         <Route path="/movies/:id" element ={<MovieCard user={user} movies={movies} setMovies={setMovies} />}/>
         <Route path="/new" element={<NewMovie user={user} handleAddMovie={handleAddMovie} />}/>
         <Route path="/reviews" element={<UserReviewsList user={user} movies={movies} setMovies={setMovies}/>}/>
+        <Route path="/my-movies" element={<MyMoviesList user={user}/>}/>
         </Routes>
       </main>
     </>

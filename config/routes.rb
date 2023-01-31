@@ -13,6 +13,9 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy'
   post '/new', to: 'movies#create'
   post '/update', to: 'reviews#update'
+  get '/update', to: 'reviews#update'
+  get '/my-movies', to: 'movies#my_movies'
+
 
   
   # Leave this here to help deploy your app later!

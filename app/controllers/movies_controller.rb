@@ -6,18 +6,11 @@ class MoviesController < ApplicationController
     end
 
     def show 
-        # Find_by is preferred
         movie = Movie.find_by(id: params[:id])
         render json: movie
     end
 
-    # def create 
-    #     movie = @current_user.movies.create!(movie_params)
-    #     render json: movie, status: :created
-    # end
-
     def create 
-        # byebug
         movie = Movie.create(movie_params)
         render json: movie, status: :created
     end
@@ -32,6 +25,11 @@ class MoviesController < ApplicationController
         movie = Movie.find(params[:id])
         movie.destroy 
         head :no_content
+    end
+
+    def my_movies 
+        movies = @current_user.movies
+        render json: movies
     end
 
     private 
