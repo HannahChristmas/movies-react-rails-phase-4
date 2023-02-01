@@ -14,7 +14,6 @@ function MovieCard( {user, movies, setMovies } ) {
 
     const [status, setStatus] = useState("pending")
     const foundMovie = movies.find(mov => mov.id === parseInt(id))
-    console.log("foundMovie from MovieCard.js:", foundMovie)
     
     useEffect(() => {
         if (foundMovie) {
@@ -72,7 +71,6 @@ function MovieCard( {user, movies, setMovies } ) {
             body: JSON.stringify(addReview)
         })  
         .then(r => r.json())
-        .then(console.log("ADDREVIEW", addReview))
         .then(data => {
             const individualReview ={
                 review_id: data.id, 

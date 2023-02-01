@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   post '/new', to: 'movies#create'
   post '/update', to: 'reviews#update'
   get '/update', to: 'reviews#update'
-  get '/my-movies', to: 'movies#my_movies'
+  # get '/my-movies', to: 'movies#my_movies'
 
 
   

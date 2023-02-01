@@ -10,7 +10,6 @@ function SignUpForm ( {onLogin} ) {
 
     function handleSubmit(e) {
         e.preventDefault();
-        console.log(e)
         setErrors([]);
         setIsLoading(true);
         fetch("/signup", {

@@ -27,11 +27,6 @@ class MoviesController < ApplicationController
         head :no_content
     end
 
-    def my_movies 
-        movies = @current_user.movies
-        render json: movies
-    end
-
     private 
 
     def movie_params
