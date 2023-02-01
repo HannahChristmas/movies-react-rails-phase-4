@@ -39,9 +39,9 @@ function App() {
       <NavBar setUser={setUser}/>
       <main>
         <Routes>
-        <Route path="/" element ={<AllMoviesList user={user} movies={movies} setMovies={setMovies}/>}/>
-        <Route path="/movies" element ={<AllMoviesList user={user} movies={movies} />}/>
-        <Route path="/movies/:id" element ={<MovieCard user={user} movies={movies} setMovies={setMovies} />}/>
+        <Route path="/" element ={ <AllMoviesList movies={movies} />}/>
+        <Route path="/movies" element ={<AllMoviesList movies={movies} />}/>
+        <Route path="/movies/:id" element ={<MovieCard user={user} movies={movies} setMovies={setMovies} setUser={setUser} />}/>
         <Route path="/new" element={<NewMovie user={user} handleAddMovie={handleAddMovie} />}/>
         <Route path="/reviews" element={<UserReviewsList user={user} movies={movies} setMovies={setMovies}/>}/>
         <Route path="/my-movies" element={<MyMoviesList user={user}/>}/>

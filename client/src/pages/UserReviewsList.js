@@ -62,7 +62,6 @@ function UserReviewsList({user, movies, setMovies}) {
           review_id: data.id,
           review_content: data.review_content,
           username: data.user.username,
-          user_id: data.user_id
         }
 
         const foundMovie = movies.find((mov) => {
@@ -83,8 +82,11 @@ function UserReviewsList({user, movies, setMovies}) {
             return mov
           }
         })
-        
+        console.log("NEW MOVIES pre setMovies:", newMovies)
         setMovies(newMovies)
+        console.log("NEW MOVIES POST setMovies:", newMovies)
+
+
         setMovieBeingEdited(null)
 
       })
@@ -97,7 +99,7 @@ function UserReviewsList({user, movies, setMovies}) {
   return (
     <Wrapper>
       {movies.map((mov) => mov.movies_with_reviews.map((rev) => {
-    if (rev.user_id === user.id) {
+    if (rev.username === user.username) {
       return (
         <Movie key={mov.id}>
         <Box>

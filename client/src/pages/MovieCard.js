@@ -6,12 +6,12 @@ import { Box } from "../styles";
 import NewReview from './NewReview.js'
 import { Button, Input, Label } from "../styles";
 
-function MovieCard( {user, movies, setMovies } ) {
+function MovieCard( {user, setUser, movies, setMovies } ) {
     const { id } = useParams();   
     const [movie, setMovie] = useState({});
     const [newReview, setNewReview] = useState("")
     const [toggleNewReview, setToggleNewReview] = useState(false)
-
+    const [userMovies, setUserMovies] = useState(user.movies)
     const [status, setStatus] = useState("pending")
     const foundMovie = movies.find(mov => mov.id === parseInt(id))
     
@@ -55,7 +55,9 @@ function MovieCard( {user, movies, setMovies } ) {
                     return mov
                 }
             })
+            const userUpdatedMovies = userMovies.filter(mov => foundMovie.id !== mov.id)
             setMovies(newMovies)
+            setUser({...user, movies: userUpdatedMovies})
           }
         })
       }
@@ -76,7 +78,6 @@ function MovieCard( {user, movies, setMovies } ) {
                 review_id: data.id, 
                 review_content: data.review_content,
                 username: data.user.username,
-                user_id: data.user_id
             }
           const updatedReviews = foundMovie.movies_with_reviews.map(review => review.review_id === individualReview.review_id ? individualReview : review)
           foundMovie.movies_with_reviews = updatedReviews 
@@ -88,6 +89,9 @@ function MovieCard( {user, movies, setMovies } ) {
                 return mov
             }
         })
+
+        // const userMovies = user.newMovies
+
         setMovies(newMovies)
         setToggleNewReview(false)    
     })
@@ -99,7 +103,7 @@ function MovieCard( {user, movies, setMovies } ) {
     function hasUserReviewedThis(param1) {
         let result = false
         param1.movies_with_reviews.forEach((item) => {
-            if(item.user_id === user.id) {
+            if(item.username === user.username) {
                 result = true;
             }
         })
@@ -118,14 +122,14 @@ function MovieCard( {user, movies, setMovies } ) {
                 {hasUserReviewedThis(foundMovie)
                     ? null 
                     :
-                    <NewReview handleAddReview={handleAddReview} movieId={movie.id} userId={user.id}></NewReview>
+                    <NewReview handleAddReview={handleAddReview} movieId={movie.id} userId={user.id} user={user} setUser={setUser} movies={movies}></NewReview>
                 }
 
                 {movie.movies_with_reviews?.map((review) => (
                     <Box key={review.review_id}>
                         {review.review_content}<br></br><br></br>
                         by: <em>{review.username}</em><br></br>
-                        {review.user_id === user.id ?
+                        {review.username === user.username ?
                         <>
                             <button onClick={() => handleDelete(review.review_id)}>Delete</button>     
                             <button onClick={() => setToggleNewReview(toggle => !toggle)}>Edit your Review</button>

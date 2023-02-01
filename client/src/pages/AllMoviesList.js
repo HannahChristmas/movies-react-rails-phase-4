@@ -6,7 +6,6 @@ function AllMoviesList({movies}){
 
     return (
         <Wrapper>
-          
             {movies.length > 0 ? (
                 movies.map((movie) => (
                     <Movie key={movie.id}>

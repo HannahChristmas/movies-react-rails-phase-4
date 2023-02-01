@@ -1,8 +1,9 @@
 import { useState } from "react";
 
-function NewReview({ handleAddReview, userId, movieId }){
+function NewReview({ handleAddReview, userId, movieId, user, setUser, movies }){
     const [reviewContent, setReviewContent] = useState("")
     const [errors, setErrors] = useState([]);
+    const [userMovies, setUserMovies] = useState(user.movies)
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -23,6 +24,7 @@ function NewReview({ handleAddReview, userId, movieId }){
               setReviewContent("");
               setErrors([]);
               handleAddReview(movieFromForm.movies_with_reviews);
+              setUser({...user, movies: [...userMovies, movieFromForm]})
             });
           } else {
             r.json().then((err) => setErrors(err.errors));
