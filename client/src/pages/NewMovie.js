@@ -13,8 +13,6 @@ function NewMovie({ user, handleAddMovie }) {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   
-
-
   function handleSubmit(e) {
     e.preventDefault();
     setIsLoading(true);
@@ -28,7 +26,7 @@ function NewMovie({ user, handleAddMovie }) {
         genre,
         year, 
         director,
-        image_url
+        image_url 
       }),
     }).then((r) => {
       setIsLoading(false);
@@ -44,6 +42,7 @@ function NewMovie({ user, handleAddMovie }) {
       }
     });
   }
+  
 
   return (
     <Wrapper>
@@ -58,7 +57,7 @@ function NewMovie({ user, handleAddMovie }) {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
             />
-          </FormField>
+          </FormField> 
           <FormField>
             <Label htmlFor="genre">Genre</Label>
             <Input

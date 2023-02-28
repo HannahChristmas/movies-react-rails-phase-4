@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  
+  # During interviews, always put a route at the top
+  get '/grabmovies/:letter', to: 'movies#grab'
+
   resources :reviews
   resources :users, only: [:index, :create, :show]
   resources :movies

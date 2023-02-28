@@ -30,7 +30,7 @@ function App() {
 
   function handleAddMovie(newMovie) {
     setMovies([newMovie, ...movies])
-}
+} 
 
   if (!user) return <Login onLogin={setUser}/>
 

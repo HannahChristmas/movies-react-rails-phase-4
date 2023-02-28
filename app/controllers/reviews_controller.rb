@@ -13,7 +13,7 @@ class ReviewsController < ApplicationController
     def create 
         review = @current_user.reviews.create!(review_params)
         render json: review.movie, status: 201
-    end
+    end 
 
     def update 
         review = @current_user.reviews.find(params[:id])

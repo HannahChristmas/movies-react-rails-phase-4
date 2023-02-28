@@ -9,7 +9,6 @@ function NewReview({ handleAddReview, userId, movieId, user, setUser, movies }){
         e.preventDefault();
         const formData = {
           movie_id: movieId,
-          user_id: userId,
           review_content: reviewContent,
         };
         fetch("/reviews", {
