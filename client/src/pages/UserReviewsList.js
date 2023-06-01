@@ -63,9 +63,17 @@ function UserReviewsList({user, movies, setMovies}) {
           review_content: data.review_content,
           username: data.user.username,
         }
+        // individualReview = the data from the patch request
 
+        // FOUND MOVIE IS: allMovies.movies_with_reviews.CURRENTREVIEW
+
+        // look through all of the movies to find the movie where
         const foundMovie = movies.find((mov) => {
+
+          // the movie.movies_with_reviews 
           const reviewsArray = mov.movies_with_reviews
+
+          // has a review id that matches the id of the review we are fucking with
           const foundReview = reviewsArray.find((rev) => rev.review_id === parseInt(id))
            if(foundReview){
             return true
@@ -73,8 +81,12 @@ function UserReviewsList({user, movies, setMovies}) {
             return false
            }
         })
+
+        // the new reviews array is foundMovie where we are looking through the reviews. If it matches the data, return the data. Else return the original review
         const updatedReviews = foundMovie.movies_with_reviews.map((review) => review.review_id === individualReview.review_id ? individualReview : review)
         foundMovie.movies_with_reviews = updatedReviews
+
+        // all the movies but with the new shit
         const newMovies = movies.map(mov => {
           if (foundMovie.id === mov.id){
             return foundMovie

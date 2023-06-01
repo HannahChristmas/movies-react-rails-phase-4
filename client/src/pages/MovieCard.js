@@ -64,6 +64,7 @@ function MovieCard( {user, setUser, movies, setMovies } ) {
 
       function handleUpdateReview(e, id) {
         e.preventDefault()
+        // the body I'm sending
         const addReview = {review_content: newReview}
         fetch(`/reviews/${id}`, {
             method: "PATCH",

@@ -8,7 +8,7 @@ class ReviewsController < ApplicationController
     def show 
         review = @current_user.reviews.find(params[:id])
         render json: review
-    end
+    end 
 
     def create 
         review = @current_user.reviews.create!(review_params)

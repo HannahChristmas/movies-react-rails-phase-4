@@ -49,7 +49,7 @@ function LoginForm ( { onLogin } ) {
             </label>
             <button type="submit">{isLoading ? "Loading..." : "Login"}</button>
             <label>
-                {errors.map((err) => (
+                {errors?.map((err) => (
                     <p key={err}>{err}</p>
                 ))}
             </label>
