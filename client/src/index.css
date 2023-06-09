@@ -3,8 +3,8 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  /* -webkit-font-smoothing: antialiased; */
+  /* -moz-osx-font-smoothing: grayscale; */
 }
 
 code {
@@ -12,13 +12,92 @@ code {
     monospace;
 }
 
-.header{
-  background-color: #FFEFE4;
-  height: 8rem;
+
+
+
+/* Position and sizing of burger button */
+.bm-burger-button {
+  position: fixed;
+  width: 36px;
+  height: 30px;
+  right: 36px;
+  top: 36px;
 }
 
-nav a {
-  /* display: inline-flex; */
+/* Color/shape of burger icon bars */
+.bm-burger-bars {
+  background: #979cb1;
+}
+
+/* Color/shape of burger icon bars on hover*/
+.bm-burger-bars-hover {
+  background: #a90000;
+}
+
+/* Position and sizing of clickable cross button */
+.bm-cross-button {
+  height: 24px;
+  width: 24px;
+  left: 24px;
+}
+
+/* Color/shape of close button cross */
+.bm-cross {
+  background: pink;
+}
+
+/*
+Sidebar wrapper styles
+Note: Beware of modifying this element as it can break the animations - you should not need to touch it in most cases
+*/
+.bm-menu-wrap {
+  position: fixed;
+  top: 0; 
+  bottom: 0;
+  height: 100%;
+}
+
+/* General sidebar styles */
+.bm-menu {
+  background: orange;
+  /* height: 100vh; */
+  padding: 2.5em 1.5em 0;
+  font-size: 1.15em;
+  /* right: 36px; */
+
+}
+
+/* Morph shape necessary with bubble or elastic */
+.bm-morph-shape {
+  fill: orangered;
+  
+}
+
+/* Wrapper for item list */
+.bm-item-list {
+  color: #b8b7ad;
+  padding: 0.8em;
+}
+
+/* Individual item */
+.bm-item {
+  display: inline-block;
+}
+
+/* Styling of overlay */
+.bm-overlay {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+
+
+
+/* .header{
+  background-color: #FFEFE4;
+  height: 8rem;
+} */
+
+/* nav a {
   padding-top: 1.5rem;
   margin: 2rem;
   text-decoration: none;
@@ -27,17 +106,18 @@ nav a {
   transition: 0.1s;
   vertical-align: middle;
   line-height: 8rem;
-}
-nav a:hover{
+} */
+
+/* nav a:hover{
   color: #F76507;
   border-bottom: 2px solid #40BA93;
-}
-.navImage{
+} */
+/* .navImage{
   height: 5.5rem;
   float: right;
   padding-right: 4rem;
   padding-top: 1.3rem;
-}
+} */
 
 .poster {
   height: 20rem;
