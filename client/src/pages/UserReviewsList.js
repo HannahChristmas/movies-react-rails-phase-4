@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Box, Button, Input, Label } from "../styles";
+import { Box, Button, Input, Label, Wrapper, Movie } from "../styles";
 import { useState } from "react"
 
 function UserReviewsList({user, movies, setMovies}) {
@@ -109,6 +109,7 @@ function UserReviewsList({user, movies, setMovies}) {
   }
 
   return (
+    <div className="movie-container">
     <Wrapper>
       {movies.map((mov) => mov.movies_with_reviews.map((rev) => {
     if (rev.username === user.username) {
@@ -148,17 +149,8 @@ function UserReviewsList({user, movies, setMovies}) {
   }))}
   
     </Wrapper>
+    </div>
   );
 }
-
-const Wrapper = styled.section`
-  max-width: 800px;
-  margin: 40px auto;
-  text-align: center;
-`;
-
-const Movie = styled.article`
-  margin-bottom: 24px;
-`;
 
 export default UserReviewsList;

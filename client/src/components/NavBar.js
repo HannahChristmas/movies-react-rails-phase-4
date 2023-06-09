@@ -30,11 +30,11 @@ function NavBar({ setUser }){
         // </div>
         <>
             <Menu right>
+                <h1 id="logo-h1">Seen It</h1>
                 <Link id="home" className="menu-item" to="/movies">all movies</Link>
-                <Link id="about" className="menu-item" to="/my-movies">my movies</Link>
-                <Link id="contact" className="menu-item" to="/my-reviews">my reviews</Link>
+                <Link id="contact" className="menu-item" to="/reviews">my reviews</Link>
                 <Link id="contact" className="menu-item" to="/new">add movie</Link>
-                {/* <a onClick={ showSettings } className="menu-item--small" href="">Settings</a> */}
+                <button onClick={handleLogoutClick}>Logout</button>
             </Menu>
         </>
     )

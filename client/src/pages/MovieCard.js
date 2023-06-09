@@ -1,10 +1,9 @@
 // import zIndex from "@mui/material/styles/zIndex";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import styled from "styled-components";
 import { Box } from "../styles";
 import NewReview from './NewReview.js'
-import { Button, Input, Label } from "../styles";
+import { Button, Input, Label, Wrapper } from "../styles";
 
 function MovieCard( {user, setUser, movies, setMovies } ) {
     const { id } = useParams();   
@@ -112,14 +111,15 @@ function MovieCard( {user, setUser, movies, setMovies } ) {
     }
 
     return (
+        <div className="movie-container">
         <Wrapper>
-            <Box>
+            <Box id="movie-card-left">
                 <img className="poster" alt={movie.title}src={movie.image_url}/>
-                <h1>{movie.title}</h1>
                 <h1>{movie.genre}</h1>
                 <h1>{movie.year}</h1>
+                <h1>{movie.director}</h1>
             </Box>
-            <Box>
+            <Box id="movie-card-right">
                 {hasUserReviewedThis(foundMovie)
                     ? null 
                     :
@@ -127,7 +127,8 @@ function MovieCard( {user, setUser, movies, setMovies } ) {
                 }
 
                 {movie.movies_with_reviews?.map((review) => (
-                    <Box key={review.review_id}>
+
+                    <Box id="review-card" key={review.review_id}>
                         {review.review_content}<br></br><br></br>
                         by: <em>{review.username}</em><br></br>
                         {review.username === user.username ?
@@ -157,13 +158,8 @@ function MovieCard( {user, setUser, movies, setMovies } ) {
             
             </Box>
         </Wrapper>
+        </div>
     )
 }
-
-const Wrapper = styled.section`
-  max-width: 800px;
-  margin: 40px auto;
-  text-align: center;
-`;
 
 export default MovieCard;
