@@ -5,7 +5,7 @@ import { Box, Button, Wrapper, Movie } from "../styles";
 function AllMoviesList({movies}){
 
     return (
-        <div class="movie-container">
+        <div className="movie-container">
             {/* <h1 id="logo-h1">Seen It</h1> */}
             <Wrapper>
                 {movies.length > 0 ? (
