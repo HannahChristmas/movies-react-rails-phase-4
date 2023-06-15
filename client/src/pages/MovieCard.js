@@ -33,6 +33,11 @@ function MovieCard( {user, setUser, movies, setMovies } ) {
         }
     }, [userReview])
 
+    const togglePopup = () => {
+        setToggleUpdateReview((toggle) => !toggle);
+        // setUpdateReview("")
+    }
+
     function handleAddReview(updatedReviews) {
         movie.movies_with_reviews = updatedReviews
         setMovie({...movie})
@@ -127,7 +132,7 @@ function MovieCard( {user, setUser, movies, setMovies } ) {
                     <Box id="review-card">
                         <div id="user-review-content">
                             <p>{userReview.review_content}</p>
-                            <button onClick={() => setToggleUpdateReview(toggle => !toggle)}>✏</button>
+                            <button onClick={togglePopup}>✏</button>
                         </div>
                         <div id="review-toggle-div">
                         {toggleUpdateReview ? 
