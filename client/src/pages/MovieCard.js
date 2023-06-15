@@ -1,17 +1,18 @@
 // import zIndex from "@mui/material/styles/zIndex";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router";
 import { Box } from "../styles";
 import NewReview from './NewReview.js'
-import { Button, Input, Label, Wrapper } from "../styles";
+import { Button, Input, Wrapper } from "../styles";
 
 function MovieCard( {user, setUser, movies, setMovies } ) {
     const { id } = useParams();   
     const [movie, setMovie] = useState({});
     const [updateReview, setUpdateReview] = useState("")
-    const [toggleUpdateReview, setToggleUpdateReview] = useState(false)
+    const [toggleReviewPopup, setToggleReviewPopup] = useState(false)
     const [userMovies, setUserMovies] = useState(user.movies)
     const [status, setStatus] = useState("pending")
+    const popupRef = useRef();
 
     const userReview = movie.movies_with_reviews?.find(review => review.username === user.username)
     console.log("userReview: ", userReview)    
@@ -34,7 +35,7 @@ function MovieCard( {user, setUser, movies, setMovies } ) {
     }, [userReview])
 
     const togglePopup = () => {
-        setToggleUpdateReview((toggle) => !toggle);
+        setToggleReviewPopup((toggle) => !toggle);
         // setUpdateReview("")
     }
 
@@ -108,7 +109,7 @@ function MovieCard( {user, setUser, movies, setMovies } ) {
         // const userMovies = user.newMovies
 
         setMovies(newMovies)
-        setToggleUpdateReview(false)    
+        setToggleReviewPopup(false)    
     })
     }
 
@@ -134,23 +135,27 @@ function MovieCard( {user, setUser, movies, setMovies } ) {
                             <p>{userReview.review_content}</p>
                             <button onClick={togglePopup}>✏</button>
                         </div>
-                        <div id="review-toggle-div">
-                        {toggleUpdateReview ? 
-                                <form>
-                                <Input
-                                    type="text"
-                                    id="review"
-                                    value={updateReview}
-                                    onChange={(e) => setUpdateReview(e.target.value)}
-                                />
-                                    <Button onClick={(e) => handleUpdateReview(e, userReview.review_id)} color="primary" type="submit">
-                                    Submit Review
-                                    </Button>
-                                    <button onClick={() => handleDelete(userReview.review_id)}>Delete</button>     
-                                </form>
-                                : null
-                        }
-                        </div>
+                        {toggleReviewPopup && (
+                            <div id="popup-overlay">
+                                <div id="popup-content">
+                                    <Button id="close-button" onClick={togglePopup}>X</Button>
+                                    <form>
+                                    <Input
+                                        type="text"
+                                        id="review"
+                                        value={updateReview}
+                                        onChange={(e) => setUpdateReview(e.target.value)}
+                                    />
+                                    <div id="delete-post-div">
+                                        <Button id="delete-button" onClick={() => handleDelete(userReview.review_id)}>DELETE</Button>     
+                                        <Button onClick={(e) => handleUpdateReview(e, userReview.review_id)} color="primary" type="submit">
+                                        POST
+                                        </Button>
+                                    </div>
+                                    </form>
+                                </div>
+                            </div>
+                        )}
                     </Box>    
                     </> 
                     :
@@ -165,7 +170,6 @@ function MovieCard( {user, setUser, movies, setMovies } ) {
                         </Box>
                     )
                 ))}
-            
             </Box>
         </Wrapper>
         </div>
