@@ -12,23 +12,23 @@ function MovieCard( {user, setUser, movies, setMovies } ) {
     const [toggleNewReview, setToggleNewReview] = useState(false)
     const [userMovies, setUserMovies] = useState(user.movies)
     const [status, setStatus] = useState("pending")
-    const foundMovie = movies.find(mov => mov.id === parseInt(id))
-    
+
     useEffect(() => {
-        if (foundMovie) {
-            setMovie(foundMovie)
+        fetch(`/movies/${id}`)
+        .then(r => r.json())
+        .then(movie => {
+            setMovie(movie)
             setStatus("found")
-        } else {
-            setStatus("rejected")
-        }
-    }, [id, movies, foundMovie])
+        })
+
+    }, [id, setMovie])
 
     function handleAddReview(updatedReviews) {
-        foundMovie.movies_with_reviews = updatedReviews
-        setMovie({...foundMovie})
+        movie.movies_with_reviews = updatedReviews
+        setMovie({...movie})
         const newMovies = movies.map(mov => {
-            if (foundMovie.id === mov.id){
-                return foundMovie
+            if (movie.id === mov.id){
+                return movie
             } else {
                 return mov
             }
@@ -45,16 +45,16 @@ function MovieCard( {user, setUser, movies, setMovies } ) {
             const filteredReview = movie.movies_with_reviews.filter(review => {
                 return review.review_id !== id
             })
-            foundMovie.movies_with_reviews = filteredReview 
-            setMovie({...foundMovie})
+            movie.movies_with_reviews = filteredReview 
+            setMovie({...movie})
             const newMovies = movies.map(mov => {
-                if ( foundMovie.id === mov.id ){
-                    return foundMovie
+                if ( movie.id === mov.id ){
+                    return movie
                 } else {
                     return mov
                 }
             })
-            const userUpdatedMovies = userMovies.filter(mov => foundMovie.id !== mov.id)
+            const userUpdatedMovies = userMovies.filter(mov => movie.id !== mov.id)
             setMovies(newMovies)
             setUser({...user, movies: userUpdatedMovies})
           }
@@ -79,12 +79,12 @@ function MovieCard( {user, setUser, movies, setMovies } ) {
                 review_content: data.review_content,
                 username: data.user.username,
             }
-          const updatedReviews = foundMovie.movies_with_reviews.map(review => review.review_id === individualReview.review_id ? individualReview : review)
-          foundMovie.movies_with_reviews = updatedReviews 
-          setMovie({...foundMovie})
+          const updatedReviews = movie.movies_with_reviews.map(review => review.review_id === individualReview.review_id ? individualReview : review)
+          movie.movies_with_reviews = updatedReviews 
+          setMovie({...movie})
           const newMovies = movies.map(mov => {
-            if ( foundMovie.id === mov.id ){
-                return foundMovie
+            if ( movie.id === mov.id ){
+                return movie
             } else {
                 return mov
             }
@@ -100,6 +100,7 @@ function MovieCard( {user, setUser, movies, setMovies } ) {
     if (status === "pending") return <h2>Loading...</h2>;
     if (status === "rejected") return <h2>Error: Movie doesn't exist</h2>;
 
+    // I WANT THIS TO RETURN THE ACTUAL REVIEW, NOT JUST TRUE OR FALSE
     function hasUserReviewedThis(param1) {
         let result = false
         param1.movies_with_reviews.forEach((item) => {
@@ -110,32 +111,30 @@ function MovieCard( {user, setUser, movies, setMovies } ) {
         return result;
     }
 
+    console.log(hasUserReviewedThis(movie))
+    console.log(movie.movies_with_reviews.filter(review => review.username === user.username))
+
+    const userReview = movie.movies_with_reviews.find(review => review.username === user.username)
+    console.log("userReview: ", userReview)    
+    console.log("userReviewContent:", userReview?.review_content)
+
     return (
         <div className="movie-container">
         <Wrapper>
             <Box id="movie-card-left">
                 <img className="poster" alt={movie.title}src={movie.image_url}/>
-                <h1>{movie.genre}</h1>
-                <h1>{movie.year}</h1>
-                <h1>{movie.director}</h1>
+                <h1>{movie.genre} • {movie.year}</h1>
+                <h3>{movie.director}</h3>
             </Box>
             <Box id="movie-card-right">
-                {hasUserReviewedThis(foundMovie)
-                    ? null 
-                    :
-                    <NewReview handleAddReview={handleAddReview} movieId={movie.id} userId={user.id} user={user} setUser={setUser} movies={movies}></NewReview>
-                }
-
-                {movie.movies_with_reviews?.map((review) => (
-
-                    <Box id="review-card" key={review.review_id}>
-                        {review.review_content}<br></br><br></br>
-                        by: <em>{review.username}</em><br></br>
-                        {review.username === user.username ?
-                        <>
-                            <button onClick={() => handleDelete(review.review_id)}>Delete</button>     
-                            <button onClick={() => setToggleNewReview(toggle => !toggle)}>Edit your Review</button>
-                            {toggleNewReview ? 
+                {hasUserReviewedThis(movie)
+                    ? 
+                    <>
+                    {/* {movie.movies_with_reviews.filter(review => review.username === user.username)} */}
+                    <p>{userReview.review_content}</p>
+                    <button onClick={() => handleDelete(userReview.review_id)}>Delete</button>     
+                    <button onClick={() => setToggleNewReview(toggle => !toggle)}>Edit your Review</button>
+                    {toggleNewReview ? 
                             <form>
                             <Label htmlFor="title">Review</Label>
                             <Input
@@ -144,16 +143,24 @@ function MovieCard( {user, setUser, movies, setMovies } ) {
                               value={movie.review_content}
                               onChange={(e) => setNewReview(e.target.value)}
                             />
-                                <Button onClick={(e) => handleUpdateReview(e, review.review_id)} color="primary" type="submit">
+                                <Button onClick={(e) => handleUpdateReview(e, userReview.review_id)} color="primary" type="submit">
                                  Submit Review
                                 </Button>
                             </form>
                               : null
-                        }    
-                        </>
-                            : null
-                    }
-                    </Box>
+                    }    
+                    </> 
+                    :
+                    <NewReview handleAddReview={handleAddReview} movieId={movie.id} userId={user.id} user={user} setUser={setUser} movies={movies}></NewReview>
+                }
+
+                {movie.movies_with_reviews?.map((review) => (
+                    review.username !== user.username && (
+                        <Box id="review-card" key={review.review_id}>
+                            {review.review_content}<br></br>
+                            by: <em>{review.username}</em><br></br>
+                        </Box>
+                    )
                 ))}
             
             </Box>
