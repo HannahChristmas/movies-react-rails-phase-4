@@ -84,6 +84,16 @@ body {
   margin-right: 5px;
 }
 
+#edit-button {
+  /* border: 1px solid #f4a127;
+  border-radius: 50%; */
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+  font-size: 1.5rem;
+  color: #e5771e;
+}
+
 #delete-post-div {
   /* border: 2px solid pink; */
   width: 400px;
@@ -170,6 +180,22 @@ Note: Beware of modifying this element as it can break the animations - you shou
 /* Styling of overlay */
 .bm-overlay {
   background: rgba(0, 0, 0, 0.3);
+}
+
+#logout-button {
+  cursor: pointer;
+  font-family: "SuperFunky";
+  background-color: transparent;
+  border: none;
+  color: #ffecb4;
+}
+
+#logout-button:hover {
+ color: #75c8ae;
+}
+
+#add-review-form {
+  margin-bottom: 10px;
 }
 
 

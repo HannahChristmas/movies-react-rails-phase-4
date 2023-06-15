@@ -1,5 +1,5 @@
 // import zIndex from "@mui/material/styles/zIndex";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { Box } from "../styles";
 import NewReview from './NewReview.js'
@@ -12,7 +12,6 @@ function MovieCard( {user, setUser, movies, setMovies } ) {
     const [toggleReviewPopup, setToggleReviewPopup] = useState(false)
     const [userMovies, setUserMovies] = useState(user.movies)
     const [status, setStatus] = useState("pending")
-    const popupRef = useRef();
 
     const userReview = movie.movies_with_reviews?.find(review => review.username === user.username)
     console.log("userReview: ", userReview)    
@@ -132,8 +131,8 @@ function MovieCard( {user, setUser, movies, setMovies } ) {
                     <>
                     <Box id="review-card">
                         <div id="user-review-content">
-                            <p>{userReview.review_content}</p>
-                            <button onClick={togglePopup}>✏</button>
+                            <h3>{userReview.review_content}</h3>
+                            <button id="edit-button" onClick={togglePopup}> ✏ </button>
                         </div>
                         {toggleReviewPopup && (
                             <div id="popup-overlay">
@@ -165,8 +164,8 @@ function MovieCard( {user, setUser, movies, setMovies } ) {
                 {movie.movies_with_reviews?.map((review) => (
                     review.username !== user.username && (
                         <Box id="review-card" key={review.review_id}>
-                            {review.review_content}<br></br><br></br>
-                            by: <em>{review.username}</em><br></br>
+                            <h3>{review.review_content}</h3>
+                            <p><em>by: {review.username}</em></p>
                         </Box>
                     )
                 ))}

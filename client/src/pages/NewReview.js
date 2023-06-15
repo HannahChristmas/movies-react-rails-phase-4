@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Button, Input } from "../styles";
 
 function NewReview({ handleAddReview, userId, movieId, user, setUser, movies }){
     const [reviewContent, setReviewContent] = useState("")
@@ -36,11 +37,10 @@ function NewReview({ handleAddReview, userId, movieId, user, setUser, movies }){
     }
 
     return(     
-        <form onSubmit={handleSubmit}>
-        <h2>Add New Review</h2>
+        <form id="add-review-form" onSubmit={handleSubmit}>
+        <h3>Add New Review</h3>
         <div>
-          <label htmlFor="review">Review</label>
-          <input
+          <Input
             type="text"
             id="review"
             value={reviewContent}
@@ -52,7 +52,7 @@ function NewReview({ handleAddReview, userId, movieId, user, setUser, movies }){
             {err}
           </p>
         ))}
-        <button type="submit">Submit</button>
+        <Button type="submit">POST</Button>
       </form>
     )
 }
