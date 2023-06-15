@@ -39,6 +39,10 @@ body {
   height: 100px;
 }
 
+#user-review-card {
+  height: 100px;
+  display: flex;
+}
 
 
 /* Position and sizing of burger button */

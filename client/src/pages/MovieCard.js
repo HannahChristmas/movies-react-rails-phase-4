@@ -8,10 +8,14 @@ import { Button, Input, Label, Wrapper } from "../styles";
 function MovieCard( {user, setUser, movies, setMovies } ) {
     const { id } = useParams();   
     const [movie, setMovie] = useState({});
-    const [newReview, setNewReview] = useState("")
-    const [toggleNewReview, setToggleNewReview] = useState(false)
+    const [updateReview, setUpdateReview] = useState("")
+    const [toggleUpdateReview, setToggleUpdateReview] = useState(false)
     const [userMovies, setUserMovies] = useState(user.movies)
     const [status, setStatus] = useState("pending")
+
+    const userReview = movie.movies_with_reviews?.find(review => review.username === user.username)
+    console.log("userReview: ", userReview)    
+    console.log("userReviewContent:", userReview?.review_content)
 
     useEffect(() => {
         fetch(`/movies/${id}`)
@@ -22,6 +26,12 @@ function MovieCard( {user, setUser, movies, setMovies } ) {
         })
 
     }, [id, setMovie])
+
+    useEffect(() => {
+        if (userReview) {
+            setUpdateReview(userReview.review_content)
+        }
+    }, [userReview])
 
     function handleAddReview(updatedReviews) {
         movie.movies_with_reviews = updatedReviews
@@ -64,13 +74,13 @@ function MovieCard( {user, setUser, movies, setMovies } ) {
       function handleUpdateReview(e, id) {
         e.preventDefault()
         // the body I'm sending
-        const addReview = {review_content: newReview}
+        const updatedReviewBody = {review_content: updateReview}
         fetch(`/reviews/${id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type" : "application/json"
             },
-            body: JSON.stringify(addReview)
+            body: JSON.stringify(updatedReviewBody)
         })  
         .then(r => r.json())
         .then(data => {
@@ -93,31 +103,15 @@ function MovieCard( {user, setUser, movies, setMovies } ) {
         // const userMovies = user.newMovies
 
         setMovies(newMovies)
-        setToggleNewReview(false)    
+        setToggleUpdateReview(false)    
     })
     }
 
     if (status === "pending") return <h2>Loading...</h2>;
     if (status === "rejected") return <h2>Error: Movie doesn't exist</h2>;
 
-    // I WANT THIS TO RETURN THE ACTUAL REVIEW, NOT JUST TRUE OR FALSE
-    function hasUserReviewedThis(param1) {
-        let result = false
-        param1.movies_with_reviews.forEach((item) => {
-            if(item.username === user.username) {
-                result = true;
-            }
-        })
-        return result;
-    }
 
-    console.log(hasUserReviewedThis(movie))
-    console.log(movie.movies_with_reviews.filter(review => review.username === user.username))
-
-    const userReview = movie.movies_with_reviews.find(review => review.username === user.username)
-    console.log("userReview: ", userReview)    
-    console.log("userReviewContent:", userReview?.review_content)
-
+   
     return (
         <div className="movie-container">
         <Wrapper>
@@ -127,21 +121,22 @@ function MovieCard( {user, setUser, movies, setMovies } ) {
                 <h3>{movie.director}</h3>
             </Box>
             <Box id="movie-card-right">
-                {hasUserReviewedThis(movie)
+                {userReview
                     ? 
                     <>
-                    {/* {movie.movies_with_reviews.filter(review => review.username === user.username)} */}
+                    <Box id="user-review-card">
                     <p>{userReview.review_content}</p>
+                    <button onClick={() => setToggleUpdateReview(toggle => !toggle)}>✏</button>
+                    </Box>
                     <button onClick={() => handleDelete(userReview.review_id)}>Delete</button>     
-                    <button onClick={() => setToggleNewReview(toggle => !toggle)}>Edit your Review</button>
-                    {toggleNewReview ? 
+                    {toggleUpdateReview ? 
                             <form>
                             <Label htmlFor="title">Review</Label>
                             <Input
                               type="text"
                               id="review"
-                              value={movie.review_content}
-                              onChange={(e) => setNewReview(e.target.value)}
+                              value={updateReview}
+                              onChange={(e) => setUpdateReview(e.target.value)}
                             />
                                 <Button onClick={(e) => handleUpdateReview(e, userReview.review_id)} color="primary" type="submit">
                                  Submit Review
@@ -157,7 +152,7 @@ function MovieCard( {user, setUser, movies, setMovies } ) {
                 {movie.movies_with_reviews?.map((review) => (
                     review.username !== user.username && (
                         <Box id="review-card" key={review.review_id}>
-                            {review.review_content}<br></br>
+                            {review.review_content}<br></br><br></br>
                             by: <em>{review.username}</em><br></br>
                         </Box>
                     )
