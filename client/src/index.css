@@ -39,11 +39,16 @@ body {
   height: 100px;
 }
 
-#user-review-card {
-  height: 100px;
+#user-review-content {
+  /* border: 2px solid pink; */
   display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
+#review-toggle-div {
+  border: 2px solid purple;
+}
 
 /* Position and sizing of burger button */
 .bm-burger-button {

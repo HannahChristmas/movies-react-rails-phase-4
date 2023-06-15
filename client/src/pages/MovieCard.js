@@ -124,26 +124,29 @@ function MovieCard( {user, setUser, movies, setMovies } ) {
                 {userReview
                     ? 
                     <>
-                    <Box id="user-review-card">
-                    <p>{userReview.review_content}</p>
-                    <button onClick={() => setToggleUpdateReview(toggle => !toggle)}>✏</button>
-                    </Box>
-                    <button onClick={() => handleDelete(userReview.review_id)}>Delete</button>     
-                    {toggleUpdateReview ? 
-                            <form>
-                            <Label htmlFor="title">Review</Label>
-                            <Input
-                              type="text"
-                              id="review"
-                              value={updateReview}
-                              onChange={(e) => setUpdateReview(e.target.value)}
-                            />
-                                <Button onClick={(e) => handleUpdateReview(e, userReview.review_id)} color="primary" type="submit">
-                                 Submit Review
-                                </Button>
-                            </form>
-                              : null
-                    }    
+                    <Box id="review-card">
+                        <div id="user-review-content">
+                            <p>{userReview.review_content}</p>
+                            <button onClick={() => setToggleUpdateReview(toggle => !toggle)}>✏</button>
+                        </div>
+                        <div id="review-toggle-div">
+                        {toggleUpdateReview ? 
+                                <form>
+                                <Input
+                                    type="text"
+                                    id="review"
+                                    value={updateReview}
+                                    onChange={(e) => setUpdateReview(e.target.value)}
+                                />
+                                    <Button onClick={(e) => handleUpdateReview(e, userReview.review_id)} color="primary" type="submit">
+                                    Submit Review
+                                    </Button>
+                                    <button onClick={() => handleDelete(userReview.review_id)}>Delete</button>     
+                                </form>
+                                : null
+                        }
+                        </div>
+                    </Box>    
                     </> 
                     :
                     <NewReview handleAddReview={handleAddReview} movieId={movie.id} userId={user.id} user={user} setUser={setUser} movies={movies}></NewReview>
