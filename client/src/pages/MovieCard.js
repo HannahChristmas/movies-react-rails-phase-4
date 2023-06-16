@@ -5,14 +5,17 @@ import { Box } from "../styles";
 import NewReview from './NewReview.js'
 import { Button, Input, Wrapper } from "../styles";
 
-function MovieCard( {user, setUser, movies, setMovies, userMovies } ) {
+function MovieCard( {user, setUser, movies, setMovies, userMovies, movie, setMovie } ) {
     const { id } = useParams();   
-    const [movie, setMovie] = useState({});
+    // const [movie, setMovie] = useState({});
     const [updateReview, setUpdateReview] = useState("")
     const [toggleReviewPopup, setToggleReviewPopup] = useState(false)
     const [status, setStatus] = useState("pending")
 
     const userReview = movie.movies_with_reviews?.find(review => review.username === user.username)
+
+    console.log("userMovies before: ", userMovies)
+
 
     useEffect(() => {
         fetch(`/movies/${id}`)
@@ -98,6 +101,8 @@ function MovieCard( {user, setUser, movies, setMovies, userMovies } ) {
             const newMovies = movies.map((mov) => (mov.id === movie.id ? movie : mov));
             setMovies(newMovies);
             setToggleReviewPopup(false); 
+            console.log("userMovies after: ", userMovies)
+
         })   
     }
 

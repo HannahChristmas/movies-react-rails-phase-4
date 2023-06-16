@@ -1,18 +1,14 @@
 import { Box, Button, Input, Movie } from "../styles";
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
-function UserReviewsList({user, movies, setMovies, userMovies}) {
-  const [newReview, setNewReview] = useState("")
-  const [movieBeingEdited, setMovieBeingEdited] = useState(null)
+function UserReviewsList({user, movies, setMovies, userMovies, movie, setMovie}) {
+  const [updateReview, setUpdateReview] = useState("")
   const [toggleReviewPopup, setToggleReviewPopup] = useState(false)
 
   const togglePopup = (mov) => {
-    setMovieBeingEdited(mov)
+    setMovie(mov)
     setToggleReviewPopup((toggle) => !toggle);
   }
-
-  console.log("MBE: ", movieBeingEdited)
-  console.log("TRPU: ", toggleReviewPopup)
 
   const handleDeleteReview = (id) => {
     fetch(`/reviews/${id}`, {
@@ -47,7 +43,7 @@ function UserReviewsList({user, movies, setMovies, userMovies}) {
 
   function handleUpdateReview(e, id) {
     e.preventDefault()
-    const updatedReviewBody = {review_content: newReview}
+    const updatedReviewBody = {review_content: updateReview}
     
     fetch(`/reviews/${id}`, {
         method: "PATCH",
@@ -64,15 +60,18 @@ function UserReviewsList({user, movies, setMovies, userMovies}) {
             username: data.user.username,
         };
 
-        const updatedReviews = movieBeingEdited.movies_with_reviews.map(review => review.review_id === individualReview.review_id ? individualReview : review)
-        movieBeingEdited.movies_with_reviews = updatedReviews 
+        const updatedReviews = movie.movies_with_reviews.map(review => review.review_id === individualReview.review_id ? individualReview : review)
+        movie.movies_with_reviews = updatedReviews 
 
-        setMovieBeingEdited({...movieBeingEdited})
-        const newMovies = movies.map((mov) => (mov.id === movieBeingEdited.id ? movieBeingEdited : mov));
+        setMovie({...movie})
+        const newMovies = movies.map((mov) => (mov.id === movie.id ? movie : mov));
         setMovies(newMovies);
         setToggleReviewPopup(false); 
+        console.log("userMovies after: ", userMovies)
     })   
 }
+
+console.log("userMovies before: ", userMovies)
 
   return (
     <>
@@ -96,7 +95,7 @@ function UserReviewsList({user, movies, setMovies, userMovies}) {
                       type="text"
                       id="review"
                       // value={rev.review_content}
-                      onChange={(e) => setNewReview(e.target.value)}
+                      onChange={(e) => setUpdateReview(e.target.value)}
                     />
                     <div id="delete-post-div">
                       <Button id="delete-button" onClick={() => handleDeleteReview(rev.review_id)}>DELETE</Button>     
