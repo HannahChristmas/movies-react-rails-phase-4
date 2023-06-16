@@ -5,15 +5,13 @@ import { Box } from "../styles";
 import NewReview from './NewReview.js'
 import { Button, Input, Wrapper } from "../styles";
 
-function MovieCard( {user, setUser, movies, setMovies } ) {
+function MovieCard( {user, setUser, movies, setMovies, userMovies } ) {
     const { id } = useParams();   
     const [movie, setMovie] = useState({});
     const [updateReview, setUpdateReview] = useState("")
     const [toggleReviewPopup, setToggleReviewPopup] = useState(false)
-    // const [userMovies] = useState(user.movies)
     const [status, setStatus] = useState("pending")
 
-    const userMovies = user.movies
     const userReview = movie.movies_with_reviews?.find(review => review.username === user.username)
 
     useEffect(() => {
@@ -76,8 +74,8 @@ function MovieCard( {user, setUser, movies, setMovies } ) {
 
       function handleUpdateReview(e, id) {
         e.preventDefault()
-        // the body I'm sending
         const updatedReviewBody = {review_content: updateReview}
+        
         fetch(`/reviews/${id}`, {
             method: "PATCH",
             headers: {
@@ -87,27 +85,20 @@ function MovieCard( {user, setUser, movies, setMovies } ) {
         })  
         .then(r => r.json())
         .then(data => {
-            const individualReview ={
+            const individualReview = {
                 review_id: data.id, 
                 review_content: data.review_content,
                 username: data.user.username,
-            }
-          const updatedReviews = movie.movies_with_reviews.map(review => review.review_id === individualReview.review_id ? individualReview : review)
-          movie.movies_with_reviews = updatedReviews 
-          setMovie({...movie})
-          const newMovies = movies.map(mov => {
-            if ( movie.id === mov.id ){
-                return movie
-            } else {
-                return mov
-            }
-        })
+            };
 
-        // const userMovies = user.newMovies
+            const updatedReviews = movie.movies_with_reviews.map(review => review.review_id === individualReview.review_id ? individualReview : review)
+            movie.movies_with_reviews = updatedReviews 
 
-        setMovies(newMovies)
-        setToggleReviewPopup(false)    
-    })
+            setMovie({...movie})
+            const newMovies = movies.map((mov) => (mov.id === movie.id ? movie : mov));
+            setMovies(newMovies);
+            setToggleReviewPopup(false); 
+        })   
     }
 
     if (status === "pending") return <h2>Loading...</h2>;

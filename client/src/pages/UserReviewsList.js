@@ -1,19 +1,18 @@
 import { Box, Button, Input, Movie } from "../styles";
 import { useState } from "react"
 
-function UserReviewsList({user, movies, setMovies}) {
+function UserReviewsList({user, movies, setMovies, userMovies}) {
   const [newReview, setNewReview] = useState("")
   const [movieBeingEdited, setMovieBeingEdited] = useState(null)
   const [toggleReviewPopup, setToggleReviewPopup] = useState(false)
 
-  const togglePopup = (id) => {
-    if(id === movieBeingEdited) {
-      setMovieBeingEdited(null)
-    } else {
-      setMovieBeingEdited(id)
-    }
-    setToggleReviewPopup((toggleReviewPopup) => !toggleReviewPopup);
+  const togglePopup = (mov) => {
+    setMovieBeingEdited(mov)
+    setToggleReviewPopup((toggle) => !toggle);
   }
+
+  console.log("MBE: ", movieBeingEdited)
+  console.log("TRPU: ", toggleReviewPopup)
 
   const handleDeleteReview = (id) => {
     fetch(`/reviews/${id}`, {
@@ -46,64 +45,49 @@ function UserReviewsList({user, movies, setMovies}) {
     })
   }
 
-  const handleUpdateReview = (e, id) => {
+  function handleUpdateReview(e, id) {
     e.preventDefault()
-    const addReview = {review_content: newReview}
+    const updatedReviewBody = {review_content: newReview}
+    
     fetch(`/reviews/${id}`, {
-      method: "PATCH", 
-      headers: {
-        "Content-Type" : "application/json"
-      }, 
-      body: JSON.stringify(addReview)
-    })
-     .then(r => {
-      if (r.ok) {
-      r.json().then(data => {
+        method: "PATCH",
+        headers: {
+            "Content-Type" : "application/json"
+        },
+        body: JSON.stringify(updatedReviewBody)
+    })  
+    .then(r => r.json())
+    .then(data => {
         const individualReview = {
-          review_id: data.id,
-          review_content: data.review_content,
-          username: data.user.username,
-        }
-        const foundMovie = movies.find((mov) => {
-          const reviewsArray = mov.movies_with_reviews
-          const foundReview = reviewsArray.find((rev) => rev.review_id === parseInt(id))
-           if(foundReview){
-            return true
-           } else {
-            return false
-           }
-        })
+            review_id: data.id, 
+            review_content: data.review_content,
+            username: data.user.username,
+        };
 
-        const updatedReviews = foundMovie.movies_with_reviews.map((review) => review.review_id === individualReview.review_id ? individualReview : review)
-        foundMovie.movies_with_reviews = updatedReviews
+        const updatedReviews = movieBeingEdited.movies_with_reviews.map(review => review.review_id === individualReview.review_id ? individualReview : review)
+        movieBeingEdited.movies_with_reviews = updatedReviews 
 
-        const newMovies = movies.map(mov => {
-          if (foundMovie.id === mov.id){
-            return foundMovie
-          } else {
-            return mov
-          }
-        })
-        setMovies(newMovies)
-        setMovieBeingEdited(null)
-      })
-      }
-     })
-  }
+        setMovieBeingEdited({...movieBeingEdited})
+        const newMovies = movies.map((mov) => (mov.id === movieBeingEdited.id ? movieBeingEdited : mov));
+        setMovies(newMovies);
+        setToggleReviewPopup(false); 
+    })   
+}
 
   return (
     <>
       <div id="all-movies-container">
-        {movies.map((mov) => mov.movies_with_reviews.map((rev) => {
-      if (rev.username === user.username) {
-        return (
+        {userMovies.map((mov) => {
+          const userReviews = mov.movies_with_reviews.filter((rev) => rev.username === user.username);
+        
+        return userReviews.map((rev) => (
           <Movie key={mov.id}>
           <Box>
             <img className="poster" alt={mov.title} src={mov.image_url}></img>
             <p>{mov.genre}&nbsp; · &nbsp; {mov.year} &nbsp;·&nbsp; {mov.director}<br></br></p>
             <p><b>MY REVIEW:</b> {rev.review_content}</p>
-            <button id="edit-button" onClick={() => togglePopup(mov.id)}> ✏ </button>
-            {movieBeingEdited === mov.id && (
+            <button id="edit-button" onClick={() => togglePopup(mov)}> ✏ </button>
+            {toggleReviewPopup && (
               <div id="popup-overlay">
                 <div id="popup-content">
                   <Button id="close-button" onClick={togglePopup}>X</Button>
@@ -111,7 +95,7 @@ function UserReviewsList({user, movies, setMovies}) {
                     <Input
                       type="text"
                       id="review"
-                      //value={rev.review_content}
+                      // value={rev.review_content}
                       onChange={(e) => setNewReview(e.target.value)}
                     />
                     <div id="delete-post-div">
@@ -123,14 +107,11 @@ function UserReviewsList({user, movies, setMovies}) {
                   </form>
                 </div>
               </div>
-              )
-            }  
+              )}  
           </Box>
           </Movie>
-        )
-      }
-    }))}
-    
+        ));
+      })}
       </div>
     </>
   );

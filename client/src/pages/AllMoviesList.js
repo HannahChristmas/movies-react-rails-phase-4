@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-// import styled from "styled-components";
 import { Box, Button, Movie } from "../styles";
 
 function AllMoviesList({movies}){

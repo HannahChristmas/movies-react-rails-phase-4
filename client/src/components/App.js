@@ -34,6 +34,9 @@ function App() {
 
   if (!user) return <Login onLogin={setUser}/>
 
+  const userMovies = user.movies
+
+
   return (
     <>
       <NavBar setUser={setUser}/>
@@ -41,9 +44,9 @@ function App() {
         <Routes>
         <Route path="/" element ={ <AllMoviesList movies={movies} />}/>
         <Route path="/movies" element ={<AllMoviesList movies={movies} />}/>
-        <Route path="/movies/:id" element ={<MovieCard user={user} movies={movies} setMovies={setMovies} setUser={setUser} />}/>
+        <Route path="/movies/:id" element ={<MovieCard user={user} movies={movies} setMovies={setMovies} setUser={setUser} userMovies={userMovies}/>}/>
         <Route path="/new" element={<NewMovie user={user} handleAddMovie={handleAddMovie} />}/>
-        <Route path="/reviews" element={<UserReviewsList user={user} movies={movies} setMovies={setMovies}/>}/>
+        <Route path="/reviews" element={<UserReviewsList user={user} movies={movies} setMovies={setMovies} userMovies={userMovies}/>}/>
         <Route path="/my-movies" element={<MyMoviesList user={user}/>}/>
         </Routes>
       </main>
