@@ -68,10 +68,16 @@ body {
   margin: 0;
 }
 
-
-.movie-container {
-  /* border: 2px solid blue; */
+#all-movies-container {
+  padding-top: 40px;
+  margin: 40px auto;
+  text-align: center;
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  /* border: 2px solid pink; */
+  width: 100%;
+  overflow: scroll;
 }
 
 #movie-card-left {
@@ -277,5 +283,7 @@ nav a:hover{
 } */
 
 .poster {
-  height: 20rem;
+  height: 300px;
+  width: 215px;
+  /* width: 13rem; */
 }

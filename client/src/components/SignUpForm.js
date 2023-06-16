@@ -73,7 +73,7 @@ function SignUpForm ( {onLogin} ) {
             </Label>
             <Button id="primary-login-button" type="submit">{isLoading ? "Loading..." : "Sign Up"}</Button>
             <Label>
-                {errors.map((err) => (
+                {errors?.map((err) => (
                     <p key={err}>{err}</p>
                 ))}
             </Label>

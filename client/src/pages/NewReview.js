@@ -4,7 +4,9 @@ import { Button, Input } from "../styles";
 function NewReview({ handleAddReview, userId, movieId, user, setUser, movies }){
     const [reviewContent, setReviewContent] = useState("")
     const [errors, setErrors] = useState([]);
-    const [userMovies, setUserMovies] = useState(user.movies)
+    // const [userMovies] = useState(user.movies)
+
+    const userMovies = user.movies
 
     function handleSubmit(e) {
         e.preventDefault();

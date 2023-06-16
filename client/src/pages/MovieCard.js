@@ -10,9 +10,10 @@ function MovieCard( {user, setUser, movies, setMovies } ) {
     const [movie, setMovie] = useState({});
     const [updateReview, setUpdateReview] = useState("")
     const [toggleReviewPopup, setToggleReviewPopup] = useState(false)
-    const [userMovies, setUserMovies] = useState(user.movies)
+    // const [userMovies] = useState(user.movies)
     const [status, setStatus] = useState("pending")
 
+    const userMovies = user.movies
     const userReview = movie.movies_with_reviews?.find(review => review.username === user.username)
 
     useEffect(() => {

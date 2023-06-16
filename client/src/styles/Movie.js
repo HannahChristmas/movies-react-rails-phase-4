@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
 const Movie = styled.article`
-  margin-bottom: 24px;
-//   border: 2px solid green;
-  max-width: 250px;
+  // border: 2px solid green;
+  width: 250px;
+  height: 100%;
   margin: 5px;
 `;
 

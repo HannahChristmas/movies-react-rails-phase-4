@@ -1,4 +1,4 @@
-import { Box, Button, Input, Wrapper, Movie } from "../styles";
+import { Box, Button, Input, Movie } from "../styles";
 import { useState } from "react"
 
 function UserReviewsList({user, movies, setMovies}) {
@@ -12,7 +12,7 @@ function UserReviewsList({user, movies, setMovies}) {
     } else {
       setMovieBeingEdited(id)
     }
-    setToggleReviewPopup((toggle) => !toggle);
+    setToggleReviewPopup((toggleReviewPopup) => !toggleReviewPopup);
   }
 
   const handleDeleteReview = (id) => {
@@ -92,48 +92,47 @@ function UserReviewsList({user, movies, setMovies}) {
   }
 
   return (
-    <div className="movie-container">
-    <Wrapper>
-      {movies.map((mov) => mov.movies_with_reviews.map((rev) => {
-    if (rev.username === user.username) {
-      return (
-        <Movie key={mov.id}>
-        <Box>
-          <img className="poster" alt={mov.title} src={mov.image_url}></img>
-          <h1>{mov.title}</h1>
-          <p>{mov.genre}&nbsp; · &nbsp; {mov.year} &nbsp;·&nbsp; {mov.director}<br></br></p>
-          <p><b>MY REVIEW:</b> {rev.review_content}</p>
-          <button id="edit-button" onClick={() => togglePopup(mov.id)}> ✏ </button>
-          {movieBeingEdited === mov.id && (
-            <div id="popup-overlay">
-              <div id="popup-content">
-                <Button id="close-button" onClick={togglePopup}>X</Button>
-                <form>
-                  <Input
-                    type="text"
-                    id="review"
-                    //value={rev.review_content}
-                    onChange={(e) => setNewReview(e.target.value)}
-                  />
-                  <div id="delete-post-div">
-                    <Button id="delete-button" onClick={() => handleDeleteReview(rev.review_id)}>DELETE</Button>     
-                    <Button onClick={(e) => handleUpdateReview(e, rev.review_id)} color="primary" type="submit">
-                    POST
-                    </Button>
-                  </div>
-                </form>
+    <>
+      <div id="all-movies-container">
+        {movies.map((mov) => mov.movies_with_reviews.map((rev) => {
+      if (rev.username === user.username) {
+        return (
+          <Movie key={mov.id}>
+          <Box>
+            <img className="poster" alt={mov.title} src={mov.image_url}></img>
+            <p>{mov.genre}&nbsp; · &nbsp; {mov.year} &nbsp;·&nbsp; {mov.director}<br></br></p>
+            <p><b>MY REVIEW:</b> {rev.review_content}</p>
+            <button id="edit-button" onClick={() => togglePopup(mov.id)}> ✏ </button>
+            {movieBeingEdited === mov.id && (
+              <div id="popup-overlay">
+                <div id="popup-content">
+                  <Button id="close-button" onClick={togglePopup}>X</Button>
+                  <form>
+                    <Input
+                      type="text"
+                      id="review"
+                      //value={rev.review_content}
+                      onChange={(e) => setNewReview(e.target.value)}
+                    />
+                    <div id="delete-post-div">
+                      <Button id="delete-button" onClick={() => handleDeleteReview(rev.review_id)}>DELETE</Button>     
+                      <Button onClick={(e) => handleUpdateReview(e, rev.review_id)} color="primary" type="submit">
+                      POST
+                      </Button>
+                    </div>
+                  </form>
+                </div>
               </div>
-            </div>
-            )
-          }  
-        </Box>
-        </Movie>
-      )
-    }
-  }))}
-  
-    </Wrapper>
-    </div>
+              )
+            }  
+          </Box>
+          </Movie>
+        )
+      }
+    }))}
+    
+      </div>
+    </>
   );
 }
 

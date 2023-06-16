@@ -1,13 +1,12 @@
 import { Link } from "react-router-dom";
 // import styled from "styled-components";
-import { Box, Button, Wrapper, Movie } from "../styles";
+import { Box, Button, Movie } from "../styles";
 
 function AllMoviesList({movies}){
 
     return (
-        <div className="movie-container">
-            {/* <h1 id="logo-h1">Seen It</h1> */}
-            <Wrapper>
+        <div>
+            <div id="all-movies-container">
                 {movies.length > 0 ? (
                     movies.map((movie) => (
                         <Movie key={movie.id}>
@@ -30,7 +29,7 @@ function AllMoviesList({movies}){
                         </Button>
                     </>
                 )}
-            </Wrapper>
+            </div>
         </div>
     )
 }
