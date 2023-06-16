@@ -37,7 +37,6 @@ function App() {
 
   const userMovies = user.movies
 
-
   return (
     <>
       <NavBar setUser={setUser}/>
@@ -47,7 +46,7 @@ function App() {
         <Route path="/movies" element ={<AllMoviesList movies={movies} />}/>
         <Route path="/movies/:id" element ={<MovieCard user={user} movies={movies} setMovies={setMovies} setUser={setUser} userMovies={userMovies} movie={movie} setMovie={setMovie} toggleReviewPopup={toggleReviewPopup} setToggleReviewPopup={setToggleReviewPopup}/>}/>
         <Route path="/new" element={<NewMovie user={user} handleAddMovie={handleAddMovie} />}/>
-        <Route path="/reviews" element={<UserReviewsList user={user} movies={movies} setMovies={setMovies} userMovies={userMovies} movie={movie} setMovie={setMovie} toggleReviewPopup={toggleReviewPopup} setToggleReviewPopup={setToggleReviewPopup}/>}/>
+        <Route path="/reviews" element={<UserReviewsList user={user} setUser={setUser} movies={movies} setMovies={setMovies} userMovies={userMovies} movie={movie} setMovie={setMovie} toggleReviewPopup={toggleReviewPopup} setToggleReviewPopup={setToggleReviewPopup}/>}/>
         <Route path="/my-movies" element={<MyMoviesList user={user}/>}/>
         </Routes>
       </main>
