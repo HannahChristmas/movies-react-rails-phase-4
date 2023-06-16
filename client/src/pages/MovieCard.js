@@ -14,8 +14,6 @@ function MovieCard( {user, setUser, movies, setMovies } ) {
     const [status, setStatus] = useState("pending")
 
     const userReview = movie.movies_with_reviews?.find(review => review.username === user.username)
-    console.log("userReview: ", userReview)    
-    console.log("userReviewContent:", userReview?.review_content)
 
     useEffect(() => {
         fetch(`/movies/${id}`)
@@ -35,7 +33,6 @@ function MovieCard( {user, setUser, movies, setMovies } ) {
 
     const togglePopup = () => {
         setToggleReviewPopup((toggle) => !toggle);
-        // setUpdateReview("")
     }
 
     function handleAddReview(updatedReviews) {

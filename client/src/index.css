@@ -5,9 +5,6 @@
 body {
   margin: 0;
   font-family: 'Barlow Condensed', 'sans-serif';
-  /* font-family:'Times New Roman', Times, serif */
-  /* -webkit-font-smoothing: antialiased; */
-  /* -moz-osx-font-smoothing: grayscale; */
 }
 
 @font-face {
@@ -21,8 +18,56 @@ body {
 
 #reviews-link {
   font-family: 'SuperFunky';
-  color: #5a3d2b;
+  color: #e5771e;
 }
+
+#reviews-link:hover {
+  font-family: 'SuperFunky';
+  color: #75c8ae;
+}
+
+#login-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* border: 2px solid pink; */
+  margin-top: 50px;
+}
+
+#login-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+
+#login-h1-container {
+  display: flex;
+  align-items: center;
+  /* border: 2px solid green; */
+}
+
+#login-logo {
+  font-family: 'SuperFunky';
+  font-size: 3rem;
+  margin-left: 8px;
+  color: #e5771e;
+}
+
+#primary-login-button {
+  background-color: #e5771e;
+
+  /* background-color: #75c8ae; */
+  margin: 0;
+}
+
+#secondary-login- button {
+  /* background-color: #e5771e; */
+  background-color: #75c8ae;
+  margin: 0;
+}
+
 
 .movie-container {
   /* border: 2px solid blue; */
@@ -92,6 +137,11 @@ body {
   background-color: transparent;
   font-size: 1.5rem;
   color: #e5771e;
+}
+
+#edit-button:hover {
+  color: #75c8ae;
+
 }
 
 #delete-post-div {

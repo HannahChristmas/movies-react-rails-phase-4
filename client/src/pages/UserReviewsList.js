@@ -1,17 +1,18 @@
-import styled from "styled-components";
-import { Box, Button, Input, Label, Wrapper, Movie } from "../styles";
+import { Box, Button, Input, Wrapper, Movie } from "../styles";
 import { useState } from "react"
 
 function UserReviewsList({user, movies, setMovies}) {
   const [newReview, setNewReview] = useState("")
   const [movieBeingEdited, setMovieBeingEdited] = useState(null)
- 
-  const toggleReview = (id) => {
-    if(id === movieBeingEdited) { 
+  const [toggleReviewPopup, setToggleReviewPopup] = useState(false)
+
+  const togglePopup = (id) => {
+    if(id === movieBeingEdited) {
       setMovieBeingEdited(null)
-    } else { 
+    } else {
       setMovieBeingEdited(id)
     }
+    setToggleReviewPopup((toggle) => !toggle);
   }
 
   const handleDeleteReview = (id) => {
@@ -63,17 +64,8 @@ function UserReviewsList({user, movies, setMovies}) {
           review_content: data.review_content,
           username: data.user.username,
         }
-        // individualReview = the data from the patch request
-
-        // FOUND MOVIE IS: allMovies.movies_with_reviews.CURRENTREVIEW
-
-        // look through all of the movies to find the movie where
         const foundMovie = movies.find((mov) => {
-
-          // the movie.movies_with_reviews 
           const reviewsArray = mov.movies_with_reviews
-
-          // has a review id that matches the id of the review we are fucking with
           const foundReview = reviewsArray.find((rev) => rev.review_id === parseInt(id))
            if(foundReview){
             return true
@@ -82,11 +74,9 @@ function UserReviewsList({user, movies, setMovies}) {
            }
         })
 
-        // the new reviews array is foundMovie where we are looking through the reviews. If it matches the data, return the data. Else return the original review
         const updatedReviews = foundMovie.movies_with_reviews.map((review) => review.review_id === individualReview.review_id ? individualReview : review)
         foundMovie.movies_with_reviews = updatedReviews
 
-        // all the movies but with the new shit
         const newMovies = movies.map(mov => {
           if (foundMovie.id === mov.id){
             return foundMovie
@@ -94,17 +84,10 @@ function UserReviewsList({user, movies, setMovies}) {
             return mov
           }
         })
-        console.log("NEW MOVIES pre setMovies:", newMovies)
         setMovies(newMovies)
-        console.log("NEW MOVIES POST setMovies:", newMovies)
-
-
         setMovieBeingEdited(null)
-
       })
-      
       }
-      
      })
   }
 
@@ -118,30 +101,31 @@ function UserReviewsList({user, movies, setMovies}) {
         <Box>
           <img className="poster" alt={mov.title} src={mov.image_url}></img>
           <h1>{mov.title}</h1>
-          <p>
-            <em><b>Genre:</b> {mov.genre}</em>
-            &nbsp;·&nbsp;
-            <cite><b>Year:</b> {mov.year}</cite>
-            &nbsp;·&nbsp;
-            <cite><b>Director:</b> {mov.director}</cite><br></br><br></br>
-          </p>
-          <p><em><b>My review:</b></em> {rev.review_content}</p>
-          <button onClick={() => handleDeleteReview(rev.review_id)}>Delete</button>
-          <button onClick={() => toggleReview(mov.id)}>Edit</button>
-          {movieBeingEdited === mov.id ? 
-                            <form>
-                            <Label htmlFor="title">Review</Label>
-                            <Input
-                              type="text"
-                              id="review"
-                              onChange={(e) => setNewReview(e.target.value)}
-                            />
-                                <Button onClick={(e) => handleUpdateReview(e, rev.review_id)} color="primary" type="submit">
-                                 Submit Review
-                                </Button>
-                            </form>
-                              : null
-                        }  
+          <p>{mov.genre}&nbsp; · &nbsp; {mov.year} &nbsp;·&nbsp; {mov.director}<br></br></p>
+          <p><b>MY REVIEW:</b> {rev.review_content}</p>
+          <button id="edit-button" onClick={() => togglePopup(mov.id)}> ✏ </button>
+          {movieBeingEdited === mov.id && (
+            <div id="popup-overlay">
+              <div id="popup-content">
+                <Button id="close-button" onClick={togglePopup}>X</Button>
+                <form>
+                  <Input
+                    type="text"
+                    id="review"
+                    //value={rev.review_content}
+                    onChange={(e) => setNewReview(e.target.value)}
+                  />
+                  <div id="delete-post-div">
+                    <Button id="delete-button" onClick={() => handleDeleteReview(rev.review_id)}>DELETE</Button>     
+                    <Button onClick={(e) => handleUpdateReview(e, rev.review_id)} color="primary" type="submit">
+                    POST
+                    </Button>
+                  </div>
+                </form>
+              </div>
+            </div>
+            )
+          }  
         </Box>
         </Movie>
       )

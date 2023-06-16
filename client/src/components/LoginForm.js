@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Button, Input, Label } from "../styles";
 
 function LoginForm ( { onLogin } ) {
     const [username, setUsername] = useState("");
@@ -27,33 +28,32 @@ function LoginForm ( { onLogin } ) {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <label>
+        <form id="login-form" onSubmit={handleSubmit}>
+            <Label>
                 Username: 
-                <input 
+                <Input 
                     htmlFor="username"
                     type="text" 
                     id="username"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}/>
-            </label>
-            <label>
+            </Label>
+            <Label>
                 Password: 
-                <input 
+                <Input 
                     htmlFor="password"
                     type="password" 
                     id="password"
                     autoComplete="current-password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}/>
-            </label>
-            <button type="submit">{isLoading ? "Loading..." : "Login"}</button>
-            <label>
+            </Label>
+            <Button id="login-button" type="submit">{isLoading ? "Loading..." : "Login"}</Button>
+            <Label>
                 {errors?.map((err) => (
                     <p key={err}>{err}</p>
                 ))}
-            </label>
-
+            </Label>
         </form>
     )
 }

@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { Button, Input, Label } from "../styles";
+
 
 function SignUpForm ( {onLogin} ) {
     const [username, setUsername] = useState("");
@@ -34,47 +36,47 @@ function SignUpForm ( {onLogin} ) {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <label>
+        <form id="login-form" onSubmit={handleSubmit}>
+            <Label>
                 Username: 
-                <input 
+                <Input 
                     type="text" 
                     id="username"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}/>
-            </label>
-            <label>
+            </Label>
+            <Label>
                 Password: 
-                <input 
+                <Input 
                     type="password" 
                     id="password"
                     autoComplete="current-password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}/>
-            </label>
-            <label>
+            </Label>
+            <Label>
                 Password Confirmation: 
-                <input 
+                <Input 
                     type="password" 
                     id="password_confirmation"
                     autoComplete="current-password"
                     value={passwordConfirmation}
                     onChange={(e) => setPasswordConfirmation(e.target.value)}/>
-            </label>
-            <label>
+            </Label>
+            <Label>
                 Profile Image: 
-                <input 
+                <Input 
                     type="text" 
                     id="avatar_url"
                     value={avatarUrl}
                     onChange={(e) => setAvatarUrl(e.target.value)}/>
-            </label>
-            <button type="submit">{isLoading ? "Loading..." : "Sign Up"}</button>
-            <label>
+            </Label>
+            <Button id="primary-login-button" type="submit">{isLoading ? "Loading..." : "Sign Up"}</Button>
+            <Label>
                 {errors.map((err) => (
                     <p key={err}>{err}</p>
                 ))}
-            </label>
+            </Label>
         </form>
     )
 }

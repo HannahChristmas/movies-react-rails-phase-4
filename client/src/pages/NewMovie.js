@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { Button, Error, FormField, Input, Label } from "../styles";
 
 function NewMovie({ user, handleAddMovie }) {
-  const [title, setTitle] = useState("A New Movie");
+  const [title, setTitle] = useState("");
   const [genre, setGenre] = useState("");
   const [year, setYear] = useState("");
   const [director, setDirector] = useState("");
@@ -45,6 +45,7 @@ function NewMovie({ user, handleAddMovie }) {
   
 
   return (
+    <div>
     <Wrapper>
       <WrapperChild>
         <h2>Add a Movie</h2>
@@ -108,33 +109,27 @@ function NewMovie({ user, handleAddMovie }) {
           </FormField>
         </form>
       </WrapperChild>
-      <WrapperChild>
-        <h1>{title}</h1>
-        <p>
-          <em><b>Genre:</b> {genre} </em>
-        </p>
-        <p>
-          <em><b>Year:</b> {year} </em>
-        </p>
-        <p>
-          <em><b>Director:</b> {director} </em>
-        </p>
-        <cite>By {user.username}</cite>
-      </WrapperChild>
     </Wrapper>
+    </div>
   );
 }
 
 const Wrapper = styled.section`
-  max-width: 1000px;
-  margin: 40px auto;
+  // max-width: 1000px;
+  // margin: 40px auto;
   padding: 16px;
   display: flex;
   gap: 24px;
+  justify-content: center;
+  // align-items: center;
+  // border: 2px solid blue;
 `;
 
 const WrapperChild = styled.div`
   flex: 1;
+  // border: 2px solid pink;
+  max-width: 600px;
+  padding-top: 50px;
 `;
 
 export default NewMovie;
