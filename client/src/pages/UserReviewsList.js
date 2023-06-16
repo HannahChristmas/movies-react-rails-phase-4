@@ -1,9 +1,9 @@
 import { Box, Button, Input, Movie } from "../styles";
-import { useState, useEffect } from "react"
+import { useState } from "react"
 
-function UserReviewsList({user, movies, setMovies, userMovies, movie, setMovie}) {
+function UserReviewsList({user, movies, setMovies, userMovies, movie, setMovie, toggleReviewPopup, setToggleReviewPopup}) {
   const [updateReview, setUpdateReview] = useState("")
-  const [toggleReviewPopup, setToggleReviewPopup] = useState(false)
+  // const [toggleReviewPopup, setToggleReviewPopup] = useState(false)
 
   const togglePopup = (mov) => {
     setMovie(mov)

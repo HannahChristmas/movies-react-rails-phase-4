@@ -13,6 +13,7 @@ function App() {
   const [user, setUser] = useState(null);
   const [movies, setMovies] = useState([]);
   const [movie, setMovie] = useState({});
+  const [toggleReviewPopup, setToggleReviewPopup] = useState(false)
 
   useEffect(() => {
       fetch("/movies")
@@ -44,9 +45,9 @@ function App() {
         <Routes>
         <Route path="/" element ={ <AllMoviesList movies={movies} />}/>
         <Route path="/movies" element ={<AllMoviesList movies={movies} />}/>
-        <Route path="/movies/:id" element ={<MovieCard user={user} movies={movies} setMovies={setMovies} setUser={setUser} userMovies={userMovies} movie={movie} setMovie={setMovie}/>}/>
+        <Route path="/movies/:id" element ={<MovieCard user={user} movies={movies} setMovies={setMovies} setUser={setUser} userMovies={userMovies} movie={movie} setMovie={setMovie} toggleReviewPopup={toggleReviewPopup} setToggleReviewPopup={setToggleReviewPopup}/>}/>
         <Route path="/new" element={<NewMovie user={user} handleAddMovie={handleAddMovie} />}/>
-        <Route path="/reviews" element={<UserReviewsList user={user} movies={movies} setMovies={setMovies} userMovies={userMovies} movie={movie} setMovie={setMovie}/>}/>
+        <Route path="/reviews" element={<UserReviewsList user={user} movies={movies} setMovies={setMovies} userMovies={userMovies} movie={movie} setMovie={setMovie} toggleReviewPopup={toggleReviewPopup} setToggleReviewPopup={setToggleReviewPopup}/>}/>
         <Route path="/my-movies" element={<MyMoviesList user={user}/>}/>
         </Routes>
       </main>

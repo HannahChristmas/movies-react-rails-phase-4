@@ -5,11 +5,10 @@ import { Box } from "../styles";
 import NewReview from './NewReview.js'
 import { Button, Input, Wrapper } from "../styles";
 
-function MovieCard( {user, setUser, movies, setMovies, userMovies, movie, setMovie } ) {
+function MovieCard( {user, setUser, movies, setMovies, userMovies, movie, setMovie, toggleReviewPopup, setToggleReviewPopup } ) {
     const { id } = useParams();   
     // const [movie, setMovie] = useState({});
     const [updateReview, setUpdateReview] = useState("")
-    const [toggleReviewPopup, setToggleReviewPopup] = useState(false)
     const [status, setStatus] = useState("pending")
 
     const userReview = movie.movies_with_reviews?.find(review => review.username === user.username)
