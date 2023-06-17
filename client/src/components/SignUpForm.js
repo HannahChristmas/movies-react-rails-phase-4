@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Input, Label } from "../styles";
-
+import { useNavigate } from 'react-router-dom';
 
 function SignUpForm ( {onLogin} ) {
     const [username, setUsername] = useState("");
@@ -9,6 +9,8 @@ function SignUpForm ( {onLogin} ) {
     const [avatarUrl, setAvatarUrl] = useState("");
     const [errors, setErrors] = useState([]);
     const [isLoading, setIsLoading] = useState(false)
+
+    const navigate = useNavigate();
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -22,13 +24,13 @@ function SignUpForm ( {onLogin} ) {
             body: JSON.stringify({ 
                 username, 
                 password,
-                password_confirmation: passwordConfirmation,
-                avatar_url: avatarUrl,
+                password_confirmation: passwordConfirmation
             }),
         }).then((r) => {
             setIsLoading(false);
             if (r.ok) {
                 r.json().then((user) => onLogin(user));
+                navigate('/movies'); 
             } else {
                 r.json().then((err) => setErrors(err.errors))
             }
@@ -63,14 +65,14 @@ function SignUpForm ( {onLogin} ) {
                     value={passwordConfirmation}
                     onChange={(e) => setPasswordConfirmation(e.target.value)}/>
             </Label>
-            <Label>
+            {/* <Label>
                 Profile Image: 
                 <Input 
                     type="text" 
                     id="avatar_url"
                     value={avatarUrl}
                     onChange={(e) => setAvatarUrl(e.target.value)}/>
-            </Label>
+            </Label> */}
             <Button id="primary-login-button" type="submit">{isLoading ? "Loading..." : "Sign Up"}</Button>
             <Label>
                 {errors?.map((err) => (

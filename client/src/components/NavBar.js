@@ -13,21 +13,7 @@ function NavBar({ setUser }){
         });
     }
 
-    // const showSettings = (event) => {
-    //     event.preventDefault();
-    //     console.log('Settings clicked!');
-    // };
-
     return(
-        // <div className="header">
-        //     <nav>
-        //         <Link to ="/movies">ALL MOVIES</Link>
-        //         <Link to ="/my-movies">MY MOVIES</Link>
-        //         <Link to ="/reviews">MY REVIEWS</Link>
-        //         <Link to ="/new">ADD MOVIE</Link>
-        //         <button onClick={handleLogoutClick}>Logout</button>
-        //     </nav>
-        // </div>
         <>
             <Menu right>
                 <h1 id="logo-h1">Seen It</h1>

@@ -7,7 +7,6 @@ import AllMoviesList from '../pages/AllMoviesList.js'
 import MovieCard from '../pages/MovieCard.js'
 import UserReviewsList from "../pages/UserReviewsList";
 import NewMovie from "../pages/NewMovie";
-import MyMoviesList from "../pages/MyMoviesList";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -31,7 +30,7 @@ function App() {
 
   function handleAddMovie(newMovie) {
     setMovies([newMovie, ...movies])
-} 
+  } 
 
   if (!user) return <Login onLogin={setUser}/>
 
@@ -47,7 +46,6 @@ function App() {
         <Route path="/movies/:id" element ={<MovieCard user={user} movies={movies} setMovies={setMovies} setUser={setUser} userMovies={userMovies} movie={movie} setMovie={setMovie} toggleReviewPopup={toggleReviewPopup} setToggleReviewPopup={setToggleReviewPopup}/>}/>
         <Route path="/new" element={<NewMovie user={user} handleAddMovie={handleAddMovie} />}/>
         <Route path="/reviews" element={<UserReviewsList user={user} setUser={setUser} movies={movies} setMovies={setMovies} userMovies={userMovies} movie={movie} setMovie={setMovie} toggleReviewPopup={toggleReviewPopup} setToggleReviewPopup={setToggleReviewPopup}/>}/>
-        <Route path="/my-movies" element={<MyMoviesList user={user}/>}/>
         </Routes>
       </main>
     </>

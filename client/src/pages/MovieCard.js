@@ -5,7 +5,7 @@ import NewReview from './NewReview.js'
 import { Wrapper } from "../styles";
 import ToggleReviewPopup from "../components/ToggleReviewPopup";
 
-function MovieCard( {user, setUser, movies, setMovies, userMovies, movie, setMovie, toggleReviewPopup, setToggleReviewPopup } ) {
+function MovieCard({ user, setUser, movie, setMovie, movies, setMovies, userMovies, toggleReviewPopup, setToggleReviewPopup }) {
     const { id } = useParams();   
     const [status, setStatus] = useState("pending")
 
@@ -59,7 +59,15 @@ function MovieCard( {user, setUser, movies, setMovies, userMovies, movie, setMov
                             <button id="edit-button" onClick={togglePopup}> ✏ </button>
                         </div>
                         {toggleReviewPopup && (
-                            <ToggleReviewPopup movie={movie} setMovie={setMovie} setToggleReviewPopup={setToggleReviewPopup} movies={movies} setMovies={setMovies} user={user} setUser={setUser} userMovies={userMovies}/>
+                            <ToggleReviewPopup 
+                                user={user} 
+                                setUser={setUser} 
+                                movie={movie} 
+                                setMovie={setMovie} 
+                                movies={movies} 
+                                setMovies={setMovies} 
+                                userMovies={userMovies}
+                                setToggleReviewPopup={setToggleReviewPopup} />
                         )}
                     </Box>    
                     </> 

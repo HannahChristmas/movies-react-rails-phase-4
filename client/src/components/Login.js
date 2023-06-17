@@ -3,10 +3,9 @@ import LoginForm from './LoginForm'
 import SignUpForm from './SignUpForm'
 import { Button } from "../styles";
 
-
 function Login({ onLogin }) {
     const [showLogin, setShowLogin] = useState(true)
-
+    
     return (
         <div id="login-page">
             <div id="login-h1-container">

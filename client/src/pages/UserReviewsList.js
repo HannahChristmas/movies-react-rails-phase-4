@@ -1,7 +1,7 @@
 import { Box, Movie } from "../styles";
 import ToggleReviewPopup from "../components/ToggleReviewPopup";
 
-function UserReviewsList({user, movies, setMovies, userMovies, movie, setMovie, toggleReviewPopup, setToggleReviewPopup, setUser}) {
+function UserReviewsList({ user, setUser, movie, setMovie, movies, setMovies, userMovies, toggleReviewPopup, setToggleReviewPopup }) {
 
   const togglePopup = (mov) => {
     setMovie(mov)
@@ -23,7 +23,15 @@ function UserReviewsList({user, movies, setMovies, userMovies, movie, setMovie, 
             <button id="edit-button" onClick={() => togglePopup(mov)}> ✏ </button>
             {toggleReviewPopup && (
               <>
-                <ToggleReviewPopup movie={movie} setMovie={setMovie} setToggleReviewPopup={setToggleReviewPopup} movies={movies} setMovies={setMovies} user={user} setUser={setUser} userMovies={userMovies}/>
+                <ToggleReviewPopup 
+                  user={user} 
+                  setUser={setUser} 
+                  movie={movie} 
+                  setMovie={setMovie} 
+                  movies={movies} 
+                  setMovies={setMovies} 
+                  userMovies={userMovies}
+                  setToggleReviewPopup={setToggleReviewPopup}/>
               </>
               )}  
           </Box>

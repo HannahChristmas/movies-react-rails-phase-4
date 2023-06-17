@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import styled from "styled-components";
 import { Button, Error, FormField, Input, Label } from "../styles";
 
-function NewMovie({ user, handleAddMovie }) {
+function NewMovie({ handleAddMovie }) {
   const [title, setTitle] = useState("");
   const [genre, setGenre] = useState("");
   const [year, setYear] = useState("");
@@ -42,7 +42,6 @@ function NewMovie({ user, handleAddMovie }) {
       }
     });
   }
-  
 
   return (
     <div>
